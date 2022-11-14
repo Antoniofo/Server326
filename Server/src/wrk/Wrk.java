@@ -1,6 +1,9 @@
 package wrk;
 
+import beans.Users;
 import ctrl.ItfCtrlWrk;
+
+import java.util.ArrayList;
 
 /**
  * @author raposoesilvac
@@ -35,6 +38,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void register(String value) {
+
     }
 
     @Override
@@ -61,7 +65,8 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         
     }
     
-    public ArrayList<User> readUsers(){
+    public ArrayList<Users> readUsers(){
+
         
     }
     
@@ -69,4 +74,8 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public void receiveTemperature(double temperature) {
     }
 
+    @Override
+    public void sendImage(MBFImage frame) {
+
+    }
 }//end Wrk

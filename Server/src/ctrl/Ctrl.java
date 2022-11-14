@@ -1,7 +1,10 @@
 package ctrl;
 
+import beans.Users;
 import ihm.ItfIhmCtrl;
 import wrk.Wrk;
+
+import java.util.ArrayList;
 
 /**
  * @author raposoesilvac
@@ -27,19 +30,22 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
     }
 
     @Override
-    public void addUser(Object user) {
+    public void addUser(Users user) {
+
     }
 
     @Override
-    public void modifyUser(Object user) {
+    public void modifyUser(Users user) {
     }
 
     @Override
-    public void deleteUser(Object user) {
+    public void deleteUser(Users user) {
     }
 
+
+
     @Override
-    public Object readUsers() {
+    public ArrayList<Users> readUsers() {
     }
 
     @Override

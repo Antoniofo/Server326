@@ -1,6 +1,11 @@
 package ihm;
 
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+
 /**
  * @author raposoesilvac
  * @version 1.0

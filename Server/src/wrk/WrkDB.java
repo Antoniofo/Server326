@@ -1,6 +1,11 @@
 package wrk;
 
+import beans.MyDBException;
+import beans.Users;
+
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -10,48 +15,70 @@ import java.util.ArrayList;
  */
 public class WrkDB {
 
-	
-	public ItfWrkDb refWrk;
+    private String pu;
+    private EntityManagerFactory emf;
+    private EntityManager em;
+    private EntityTransaction et;
 
-	public WrkDB(){
+    public ItfWrkDb refWrk;
 
-	}
+    public WrkDB() {
+        this.pu = pu;
+        try {
+            emf = Persistence.createEntityManagerFactory(pu);
+            em = emf.createEntityManager();
+            et = em.getTransaction();
+        } catch (Exception ex) {
 
-	/**
-	 * 
-	 * @exception Throwable Throwable
-	 */
-	public void finalize()
-	  throws Throwable{
 
-	}
-
-	public void insertInfo(Info info){
-
-	}
-
-	public void addUser(User u){
-
-	}
-
-	public void connect(String PU){
-
-	}
-
-	public void deleteUser(User u){
-
-	}
-
-	public void disconnect(){
-
-	}
-
-	public void modifyUser(User user){
-
-	}
-                
-        
-        public ArrayList<User> readUsers(){
-            
         }
+    }
+
+    /**
+     * @throws Throwable Throwable
+     */
+    public void finalize()
+            throws Throwable {
+
+    }
+
+    public void insertInfo(Info info) {
+
+    }
+
+    public void addUser(Users u) {
+        try {
+            et.begin();
+            em.persist(u);
+            et.commit();
+        } catch (Exception ex) {
+            et.rollback();
+        }
+    }
+
+    public void connect(String PU) {
+
+    }
+
+    public void deleteUser(Users u) {
+
+    }
+
+    public void disconnect() {
+
+    }
+
+    public void modifyUser(Users user) {
+
+    }
+
+
+    public List<Users> readUsers(Class cl) {
+        List<Users> listeUser;
+        Query query = em.createQuery("SELECT e FROM "+ cl.getSimpleName()+ " e");
+        listeUser = query.getResultList();
+        return listeUser;
+
+
+    }
 }//end WrkDB

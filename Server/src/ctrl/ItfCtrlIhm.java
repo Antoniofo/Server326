@@ -1,6 +1,9 @@
 package ctrl;
 
+import beans.Users;
 import ihm.Ihm;
+
+import java.util.ArrayList;
 
 /**
  * @author raposoesilvac
@@ -9,12 +12,12 @@ import ihm.Ihm;
  */
 public interface ItfCtrlIhm {
 
-    public void addUser(User user);
+    public void addUser(Users user);
 
-    public void modifyUser(User user);
+    public void modifyUser(Users user);
 
-    public void deleteUser(User user);
+    public void deleteUser(Users user);
 
-    public ArrayList<User> readUsers();
+    public ArrayList<Users> readUsers();
 
 }
