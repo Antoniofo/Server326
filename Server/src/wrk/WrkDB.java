@@ -1,10 +1,10 @@
 package wrk;
 
-import beans.MyDBException;
+import beans.Informations;
 import beans.Users;
+import app.exceptions.MyDBException;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,15 +15,14 @@ import java.util.List;
  */
 public class WrkDB {
 
-    private String pu;
+    private String pu = "PU";
     private EntityManagerFactory emf;
     private EntityManager em;
     private EntityTransaction et;
 
-    public ItfWrkDb refWrk;
+
 
     public WrkDB() {
-        this.pu = pu;
         try {
             emf = Persistence.createEntityManagerFactory(pu);
             em = emf.createEntityManager();
@@ -42,7 +41,17 @@ public class WrkDB {
 
     }
 
-    public void insertInfo(Info info) {
+    public void insertInfo(Informations info) throws MyDBException {
+
+        try {
+            et.begin();
+            em.persist(info);
+            et.commit();
+
+
+        }catch(Exception ex){
+                et.rollback();
+        }
 
     }
 
@@ -55,27 +64,37 @@ public class WrkDB {
             et.rollback();
         }
     }
-
-    public void connect(String PU) {
-
-    }
-
     public void deleteUser(Users u) {
-
+        try {
+            et.begin();
+            em.remove(u);
+            et.commit();
+        } catch (Exception ex) {
+            et.rollback();
+        }
     }
 
     public void disconnect() {
-
+        em.close();
+        emf.close();
     }
 
     public void modifyUser(Users user) {
+        try {
+            et.begin();
+            em.merge(user);
+            et.commit();
 
+        } catch (Exception ex) {
+            et.rollback();
+
+        }
     }
 
 
     public List<Users> readUsers(Class cl) {
         List<Users> listeUser;
-        Query query = em.createQuery("SELECT e FROM "+ cl.getSimpleName()+ " e");
+        Query query = em.createQuery("SELECT e FROM " + cl.getSimpleName() + " e");
         listeUser = query.getResultList();
         return listeUser;
 
