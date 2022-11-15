@@ -26,6 +26,7 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
     }
 
     public Ctrl() {
+        refWrk = new Wrk();
 
     }
 

@@ -74,9 +74,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="addUser" mnemonicParsing="false" text="Add" GridPane.halignment="CENTER" />
-            <Button fx:id="modifyUser" mnemonicParsing="false" text="Modify" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="removeUser" mnemonicParsing="false" text="Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#addUser" text="Add" GridPane.halignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#modifyUser" text="Modify" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#removeUser" text="Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

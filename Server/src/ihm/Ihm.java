@@ -1,6 +1,10 @@
 package ihm;
 
+import beans.Users;
+import ctrl.Ctrl;
 import ctrl.ItfCtrlIhm;
+
+import java.util.ArrayList;
 
 /**
  * @author raposoesilvac
@@ -18,6 +22,7 @@ public class Ihm implements ItfIhmCtrl {
         ihmMain = new IhmMainScreen(this);
         ihmPwd = new IhmPasswordAccess(this);
         ihmUser = new IhmUserManagement(this);
+        refCtrl = new Ctrl();
     }
 
     public void setRefCtrl(ItfCtrlIhm refCtrl) {
@@ -47,5 +52,9 @@ public class Ihm implements ItfIhmCtrl {
     public void showPasswordAccess() {
         ihmPwd.start();
         ihmMain.quit();
+    }
+
+    public ArrayList<Users> getUsers() {
+        return refCtrl.readUsers();
     }
 }//end Ihm

@@ -73,7 +73,7 @@ public class IhmUserManagement {
 	 * 
 	 * @param event
 	 */
-	@FXML
+	@Deprecated
 	private void cancel(ActionEvent event){
 
 	}
@@ -82,8 +82,8 @@ public class IhmUserManagement {
 	 * 
 	 * @param event
 	 */
-	@FXML
-	private void done(ActionEvent event){
+	@Deprecated
+    private void done(ActionEvent event){
 
 	}
 

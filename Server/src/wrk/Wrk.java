@@ -21,7 +21,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public WrkPhidget wrkPhidget;
 
     public Wrk() {
-
+        wrkDb = new WrkDB();
     }
 
     /**
@@ -68,6 +68,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     }
 
     public ArrayList<Users> readUsers() throws MyDBException {
+
         return (ArrayList<Users>) wrkDb.readUsers(Users.class);
     }
 

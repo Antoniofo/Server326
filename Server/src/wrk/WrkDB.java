@@ -97,9 +97,9 @@ public class WrkDB {
     }
 
 
-    public List<Users> readUsers(Class cl) throws MyDBException{
-        List<Users> listeUser;
-        Query query = em.createQuery("SELECT e FROM " + cl.getSimpleName() + " e");
+    public <E> List<E> readUsers(Class cl) throws MyDBException{
+        List<E> listeUser;
+        Query query = em.createQuery("Select e from " + cl.getSimpleName() + " e");
         listeUser = query.getResultList();
         return listeUser;
 
