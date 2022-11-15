@@ -1,7 +1,9 @@
 package wrk;
 
+import beans.MyRobot;
 import ch.emf.info.robot.links.Robot;
 import ch.emf.info.robot.links.bean.RobotState;
+import ch.emf.info.robot.links.exception.UnreachableRobotException;
 
 /**
  * @author raposoesilvac
@@ -12,12 +14,15 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
 
     private Robot robot;
     private boolean running;
+    private int pw;
+    private int id;
+    private MyRobot myRobot;
     private boolean lastConnected;
     public ItfWrkRobot refWrk;
 
     public WrkRobot() {
         super("Thread Etat Robot");
-        robot = new Robot;
+        robot = new Robot();
 
 
     }
@@ -63,8 +68,25 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
         robot.setHeadDirection(RobotState.HeadDirection.DOWN);
     }
 
-    public void connect() {
+    public void connect(String ip, int id, int pw) {
+        myRobot = new MyRobot(ip, id, pw);
+        Thread t = new Thread(){
+            @Override
+            public void run() {
+                try{
+                    String ip = myRobot.getIp();
+                    if (ip != null) {
+                        robot.connect(ip, myRobot.getId(), myRobot.getPw());
+                        if (!robot.isConnected()) {
+                            System.out.println("err");
+                        }
+                    }
+                } catch (UnreachableRobotException e) {
+                    e.printStackTrace();
+                }
 
+            }
+        };
     }
 
     public void dock() {
@@ -72,7 +94,7 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
     }
 
     public void led() {
-
+        robot.setLedEnabled(!robot.getRobotState().isLedEnabled());
     }
 
     public void moveBackward() {
@@ -91,7 +113,7 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
     }
 
     public void standUp() {
-
+        robot.standUp();
     }
 
     public void turnLeft() {
@@ -110,11 +132,11 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
 
     @Override
     public void sendImage(byte[] frame) {
-
+    robot.getLastImage();
     }
 
     @Override
     public void sendAudio(byte[] lastAudio) {
-
+        robot.sendAudio(lastAudio);
     }
 }//end WrkRobot
