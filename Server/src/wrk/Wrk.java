@@ -2,6 +2,7 @@ package wrk;
 
 import beans.Users;
 import ctrl.ItfCtrlWrk;
+import app.exceptions.MyDBException;
 
 import java.util.ArrayList;
 
@@ -12,29 +13,25 @@ import java.util.ArrayList;
  */
 public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
-	public WrkDB wrkDb;	
-	public WrkUDP wrkUDP;
-	public WrkServer wrkServer;
-	public WrkRobot wrkRobot;
-	public ItfCtrlWrk refCtrl;
-	public WrkPhidget wrkPhidget;
+    public WrkDB wrkDb;
+    public WrkUDP wrkUDP;
+    public WrkServer wrkServer;
+    public WrkRobot wrkRobot;
+    public ItfCtrlWrk refCtrl;
+    public WrkPhidget wrkPhidget;
 
-	public Wrk(){
+    public Wrk() {
 
-	}
-
-	/**
-	 * 
-	 * @exception Throwable Throwable
-	 */
-	public void finalize()
-	  throws Throwable{
-
-	}
-
-    @Override
-    public void sendImage(Object frame) {
     }
+
+    /**
+     * @throws Throwable Throwable
+     */
+    public void finalize()
+            throws Throwable {
+
+    }
+
 
     @Override
     public void register(String value) {
@@ -52,30 +49,36 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     @Override
     public void upgradeUser(String value) {
     }
-    
-    public void addUser(){
-                
-    }
-    
-    public void modifyUser(){
-        
+
+    public void addUser(Users user) throws MyDBException {
+        wrkDb.addUser(user);
     }
 
-    public void deleteUser(){
-        
+    public void modifyUser(Users user) throws MyDBException {
+        wrkDb.modifyUser(user);
     }
-    
-    public ArrayList<Users> readUsers(){
 
-        
+    public void deleteUser(Users user) throws MyDBException {
+        wrkDb.deleteUser(user);
+
     }
-    
+
+    public ArrayList<Users> readUsers(Class cl) throws MyDBException {
+        wrkDb.readUsers(cl);
+
+    }
+
     @Override
     public void receiveTemperature(double temperature) {
     }
 
     @Override
-    public void sendImage(MBFImage frame) {
+    public void sendImage(byte[] frame) {
+        wrkUDP.sendVideo(frame);
+    }
 
+    @Override
+    public void sendAudio(byte[] lastAudio) {
+        wrkUDP.sendSound(lastAudio);
     }
 }//end Wrk

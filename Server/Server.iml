@@ -19,5 +19,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="eclipselink_2.7.9" level="project" />
     <orderEntry type="library" name="javax.persistence_2.2.0" level="project" />
+    <orderEntry type="library" name="API_Robot7Links_HSR1_HSR2" level="project" />
   </component>
 </module>

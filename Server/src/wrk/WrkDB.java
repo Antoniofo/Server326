@@ -3,6 +3,7 @@ package wrk;
 import beans.Informations;
 import beans.Users;
 import app.exceptions.MyDBException;
+import app.helpers.SystemLib;
 
 import javax.persistence.*;
 import java.util.List;
@@ -51,26 +52,29 @@ public class WrkDB {
 
         }catch(Exception ex){
                 et.rollback();
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
 
     }
 
-    public void addUser(Users u) {
+    public void addUser(Users u) throws MyDBException{
         try {
             et.begin();
             em.persist(u);
             et.commit();
         } catch (Exception ex) {
             et.rollback();
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
     }
-    public void deleteUser(Users u) {
+    public void deleteUser(Users u) throws MyDBException{
         try {
             et.begin();
             em.remove(u);
             et.commit();
         } catch (Exception ex) {
             et.rollback();
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
     }
 
@@ -79,7 +83,7 @@ public class WrkDB {
         emf.close();
     }
 
-    public void modifyUser(Users user) {
+    public void modifyUser(Users user) throws MyDBException{
         try {
             et.begin();
             em.merge(user);
@@ -87,12 +91,13 @@ public class WrkDB {
 
         } catch (Exception ex) {
             et.rollback();
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
 
         }
     }
 
 
-    public List<Users> readUsers(Class cl) {
+    public List<Users> readUsers(Class cl) throws MyDBException{
         List<Users> listeUser;
         Query query = em.createQuery("SELECT e FROM " + cl.getSimpleName() + " e");
         listeUser = query.getResultList();
