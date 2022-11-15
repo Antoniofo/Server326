@@ -63,9 +63,12 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     }
 
-    public ArrayList<Users> readUsers(Class cl) throws MyDBException {
-        wrkDb.readUsers(cl);
+    public void setRefCtrl(ItfCtrlWrk refCtrl) {
+        this.refCtrl = refCtrl;
+    }
 
+    public ArrayList<Users> readUsers() throws MyDBException {
+        return (ArrayList<Users>) wrkDb.readUsers(Users.class);
     }
 
     @Override

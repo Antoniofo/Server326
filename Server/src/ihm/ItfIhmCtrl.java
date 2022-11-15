@@ -11,5 +11,4 @@ public interface ItfIhmCtrl {
 	public void quit();
 
 	public void startIhm();
-
 }

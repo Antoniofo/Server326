@@ -9,25 +9,43 @@ import ctrl.ItfCtrlIhm;
  */
 public class Ihm implements ItfIhmCtrl {
 
-	private IhmMainScreen ihmMain;
-	private IhmPasswordAccess ihmPwd;
-	private IhmUserManagement ihmUser;
-	private ItfCtrlIhm refCtrl;
+    private IhmMainScreen ihmMain;
+    private IhmPasswordAccess ihmPwd;
+    private IhmUserManagement ihmUser;
+    private ItfCtrlIhm refCtrl;
 
-	public Ihm(){
+    public Ihm() {
+        ihmMain = new IhmMainScreen(this);
+        ihmPwd = new IhmPasswordAccess(this);
+        ihmUser = new IhmUserManagement(this);
+    }
 
-	}
+    public void setRefCtrl(ItfCtrlIhm refCtrl) {
+        this.refCtrl = refCtrl;
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
-	@Override
-	public void quit(){
+    }
 
-	}
+    @Override
+    public void quit() {
 
-	@Override
-	public void startIhm(){
+    }
 
-	}
+    @Override
+    public void startIhm() {
+        ihmPwd.start();
+    }
+
+    public void showMainScreen() {
+        ihmMain.start();
+        ihmPwd.quit();
+
+    }
+
+    public void showPasswordAccess() {
+        ihmPwd.start();
+        ihmMain.quit();
+    }
 }//end Ihm

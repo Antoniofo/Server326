@@ -70,10 +70,10 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
 
     public void connect(String ip, int id, int pw) {
         myRobot = new MyRobot(ip, id, pw);
-        Thread t = new Thread(){
+        Thread t = new Thread() {
             @Override
             public void run() {
-                try{
+                try {
                     String ip = myRobot.getIp();
                     if (ip != null) {
                         robot.connect(ip, myRobot.getId(), myRobot.getPw());
@@ -132,7 +132,7 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
 
     @Override
     public void sendImage(byte[] frame) {
-    robot.getLastImage();
+        robot.getLastImage();
     }
 
     @Override
