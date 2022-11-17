@@ -37,10 +37,7 @@ public class WrkDB {
     /**
      * @throws Throwable Throwable
      */
-    public void finalize()
-            throws Throwable {
 
-    }
 
     public void insertInfo(Informations info) throws MyDBException {
 
@@ -97,9 +94,9 @@ public class WrkDB {
     }
 
 
-    public <E> List<E> readUsers(Class cl) throws MyDBException{
-        List<E> listeUser;
-        Query query = em.createQuery("Select e from " + cl.getSimpleName() + " e");
+    public List<Users> readUsers(Class cl) throws MyDBException{
+        List<Users> listeUser;
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u");
         listeUser = query.getResultList();
         return listeUser;
 

@@ -129,7 +129,7 @@ public class Informations implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication14.Informations[ idInformations=" + idInformations + " ]";
+        return "Informations[ idInformations=" + idInformations + " ]";
     }
     
 }

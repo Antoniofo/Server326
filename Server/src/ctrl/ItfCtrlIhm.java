@@ -4,6 +4,7 @@ import beans.Users;
 import ihm.Ihm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author raposoesilvac
@@ -18,6 +19,6 @@ public interface ItfCtrlIhm {
 
     public void deleteUser(Users user);
 
-    public ArrayList<Users> readUsers();
+    public List<Users> readUsers();
 
 }

@@ -6,6 +6,7 @@ import ihm.ItfIhmCtrl;
 import wrk.Wrk;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author raposoesilvac
@@ -67,7 +68,7 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
 
 
     @Override
-    public ArrayList<Users> readUsers() {
+    public List<Users> readUsers() {
         try {
             return refWrk.readUsers();
         } catch (MyDBException e) {

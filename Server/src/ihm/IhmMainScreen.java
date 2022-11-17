@@ -2,7 +2,6 @@ package ihm;
 
 
 import beans.Users;
-import ctrl.Ctrl;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
@@ -16,12 +15,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import app.helpers.JfxPopup;
 
 
 /**
@@ -33,25 +32,21 @@ public class IhmMainScreen implements Initializable {
 
     private final String fxml = "/ihm/MainScreen.fxml";
     @FXML
-    private ListView<?> lstConnectedClients;
+    private ListView<Users> lstConnectedClients;
     @FXML
     private ListView<Users> lstUserList;
     @FXML
     private TextArea richTextBoxLogs;
     private Stage stage;
-
     private Ihm link;
+
+    public Users getSelectedUser() {
+        return lstUserList.getSelectionModel().getSelectedItem();
+    }
 
     public IhmMainScreen(Ihm link) {
         this.link = link;
-    }
 
-    public void finalize() throws Throwable {
-
-    }
-
-    public IhmMainScreen() {
-        Ctrl refCtrl = new Ctrl();
     }
 
     public void start() {
@@ -73,6 +68,7 @@ public class IhmMainScreen implements Initializable {
                     stage.setResizable(false);
                     stage.setScene(scene);
                     stage.setTitle("Client Admin");
+                    richTextBoxLogs.setEditable(false);
                     stage.show();
                 } catch (IOException ex) {
                     System.out.println("Can't start the IHM because : " + ex);
@@ -92,6 +88,8 @@ public class IhmMainScreen implements Initializable {
     @FXML
     private void addUser(ActionEvent event) {
 
+        link.showUserManagement(true);
+
     }
 
     /**
@@ -110,7 +108,12 @@ public class IhmMainScreen implements Initializable {
      */
     @FXML
     private void modifyUser(ActionEvent event) {
-    lstUserList.getItems().setAll(link.getUsers());
+
+        if (lstUserList.getSelectionModel().getSelectedItem() == null) {
+            JfxPopup.displayError("Error", "Please select a user.", "Select a user");
+        } else {
+            link.showUserManagement(false);
+        }
     }
 
     /**
@@ -118,12 +121,25 @@ public class IhmMainScreen implements Initializable {
      */
     @FXML
     private void removeUser(ActionEvent event) {
+        richTextBoxLogs.setText("User : " + lstUserList.getSelectionModel().getSelectedItem() + " Deleted");
+        link.deleteUser(lstUserList.getSelectionModel().getSelectedItem());
+        lstUserList.getItems().setAll(link.readUsers());
 
+
+    }
+
+    public void updateUsers() {
+        lstUserList.getItems().setAll(link.readUsers());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        updateUsers();
 
 
+    }
+
+    public void log(String text) {
+        richTextBoxLogs.appendText(text + System.lineSeparator());
     }
 }//end IhmMainScreen

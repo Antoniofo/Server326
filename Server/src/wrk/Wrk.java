@@ -5,6 +5,7 @@ import ctrl.ItfCtrlWrk;
 import app.exceptions.MyDBException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author raposoesilvac
@@ -67,9 +68,9 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         this.refCtrl = refCtrl;
     }
 
-    public ArrayList<Users> readUsers() throws MyDBException {
+    public List<Users> readUsers() throws MyDBException {
 
-        return (ArrayList<Users>) wrkDb.readUsers(Users.class);
+        return wrkDb.readUsers(Users.class);
     }
 
     @Override

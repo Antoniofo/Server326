@@ -127,7 +127,12 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication14.Users[ idUsers=" + idUsers + " ]";
+        String admin = "User";
+        if(getIsAdmin() == 1){
+            admin = "Admin";
+
+        }
+        return admin +", "+ getUsername();
     }
     
 }

@@ -16,6 +16,7 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="-Infinity" minHeight="0.0" prefHeight="58.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
   </rowConstraints>
@@ -24,7 +25,7 @@
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Label>
-      <Label text="Privilège :" GridPane.rowIndex="1">
+      <Label text="Privilège :" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Label>
@@ -32,8 +33,18 @@
          <GridPane.margin>
             <Insets right="150.0" />
          </GridPane.margin></TextField>
-      <ComboBox fx:id="cbxPrivilege" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" onAction="#done" prefHeight="25.0" prefWidth="78.0" text="Done" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <ComboBox fx:id="cbxPrivilege" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="78.0" text="Apply" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <TextField fx:id="txtfPwd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="234.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="150.0" />
+         </GridPane.margin>
+      </TextField>
+      <Label fx:id="lblPwd" text="Password :" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
    </children>
 </GridPane>

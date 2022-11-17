@@ -5,6 +5,7 @@ import ctrl.Ctrl;
 import ctrl.ItfCtrlIhm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author raposoesilvac
@@ -54,7 +55,37 @@ public class Ihm implements ItfIhmCtrl {
         ihmMain.quit();
     }
 
-    public ArrayList<Users> getUsers() {
+    public List<Users> getUsers() {
         return refCtrl.readUsers();
+    }
+
+    public void showUserManagement(boolean b) {
+        ihmUser.start(b);
+    }
+    public void updateUsers(){
+        ihmMain.updateUsers();
+    }
+
+
+    public void deleteUser(Users selectedItem) {
+        refCtrl.deleteUser(selectedItem);
+    }
+
+    public List<Users> readUsers() {
+        return refCtrl.readUsers();
+    }
+    public void addUsers(Users user){
+        refCtrl.addUser(user);
+    }
+    public void modifyUser(Users user){
+        refCtrl.modifyUser(user);
+    }
+
+    public Users getSelectedUser() {
+        return ihmMain.getSelectedUser();
+    }
+
+    public void log(String text){
+        ihmMain.log(text);
     }
 }//end Ihm

@@ -53,6 +53,7 @@ public class IhmPasswordAccess {
                     stage.setScene(scene);
                     stage.setTitle("Client Admin");
                     stage.show();
+
                 } catch (IOException ex) {
                     System.out.println("Can't start the IHM because : " + ex);
                     Platform.exit();
@@ -65,21 +66,17 @@ public class IhmPasswordAccess {
 
     }
 
-    public IhmPasswordAccess() {
-
-    }
-
     /**
      * @param event
      */
     @FXML
     private void submit(ActionEvent event) {
-       // if (password.equals(txtfPassword.getText())) {
+        if (password.equals(txtfPassword.getText())) {
             link.showMainScreen();
-       // } else {
-         //   JfxPopup.displayError("Erreur", "Mauvais mot de passe", "Veuillez réssayer.");
+        } else {
+            JfxPopup.displayError("Erreur", "Mauvais mot de passe", "Veuillez réssayer.");
 
-       // }
+        }
 
     }
 
