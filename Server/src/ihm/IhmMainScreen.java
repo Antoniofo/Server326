@@ -121,7 +121,7 @@ public class IhmMainScreen implements Initializable {
      */
     @FXML
     private void removeUser(ActionEvent event) {
-        richTextBoxLogs.setText("User : " + lstUserList.getSelectionModel().getSelectedItem() + " Deleted");
+        richTextBoxLogs.appendText("User : " + lstUserList.getSelectionModel().getSelectedItem() + " Deleted");
         link.deleteUser(lstUserList.getSelectionModel().getSelectedItem());
         lstUserList.getItems().setAll(link.readUsers());
 

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -36,15 +37,15 @@
       <ComboBox fx:id="cbxPrivilege" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button mnemonicParsing="false" onAction="#apply" prefHeight="25.0" prefWidth="78.0" text="Apply" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <TextField fx:id="txtfPwd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="234.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets right="150.0" />
-         </GridPane.margin>
-      </TextField>
       <Label fx:id="lblPwd" text="Password :" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
+      <PasswordField fx:id="txtfPwd" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets right="150.0" />
+         </GridPane.margin>
+      </PasswordField>
    </children>
 </GridPane>

@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -38,9 +39,9 @@ public class IhmUserManagement implements Initializable {
 
     private Ihm link;
     @FXML
-    private TextField txtfPwd;
-    @FXML
     private Label lblPwd;
+    @FXML
+    private PasswordField txtfPwd;
 
 
     public IhmUserManagement(Ihm link) {
@@ -101,14 +102,13 @@ public class IhmUserManagement implements Initializable {
 
     public void quit() {
         link.updateUsers();
-
         stage.close();
 
     }
 
     public void apply(ActionEvent actionEvent) {
         Users u;
-        String ancien =link.getSelectedUser().toString();
+
         if (txtfPwd.isVisible()) {
             u = new Users();
             u.setUsername(txtfUsername.getText());
@@ -119,7 +119,9 @@ public class IhmUserManagement implements Initializable {
             link.log("Added a user : "+ u.toString());
 
         }else{
+            String ancien =link.getSelectedUser().toString();
             u = link.getSelectedUser();
+            System.out.println(u.getIdUsers());
             u.setUsername(txtfUsername.getText());
             boolean admin = cbxPrivilege.getSelectionModel().getSelectedItem().equals("Admin");
             u.setIsAdmin(admin == true ? (short) 1 : (short) 0);
