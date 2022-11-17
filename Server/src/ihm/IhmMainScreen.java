@@ -135,8 +135,6 @@ public class IhmMainScreen implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateUsers();
-
-
     }
 
     public void log(String text) {

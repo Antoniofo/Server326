@@ -7,7 +7,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.file.Files;
-import ch.emf.info.robot.links.Robot;
 import sun.security.x509.IPAddressName;
 
 /**

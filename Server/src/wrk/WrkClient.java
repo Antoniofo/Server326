@@ -18,8 +18,8 @@ public class WrkClient extends Thread {
 	private boolean runing;
 	public ItfWrkClient refWrk;
 
-	public WrkClient(){
-
+	public WrkClient(Socket socket){
+		this.client = socket;
 	}
 
 	/**
