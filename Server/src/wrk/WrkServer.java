@@ -30,12 +30,7 @@ public class WrkServer extends Thread {
         }
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize() throws Throwable {
 
-    }
 
     @Override
     public void run() {
