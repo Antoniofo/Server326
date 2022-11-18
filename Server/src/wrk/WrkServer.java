@@ -30,7 +30,9 @@ public class WrkServer extends Thread {
         }
     }
 
-
+    public void sendMessage(String msg) {
+        client.sendMessage(msg);
+    }
 
     @Override
     public void run() {
@@ -43,8 +45,6 @@ public class WrkServer extends Thread {
                     client.start();
                     sleep(10);
                 }
-
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {

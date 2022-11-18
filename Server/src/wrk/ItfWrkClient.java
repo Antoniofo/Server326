@@ -18,4 +18,6 @@ public interface ItfWrkClient {
     void log(String s);
 
     void logOut();
+
+    void connectRobot();
 }

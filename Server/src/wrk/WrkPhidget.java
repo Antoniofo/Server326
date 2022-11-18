@@ -13,31 +13,36 @@ import com.phidget22.TemperatureSensorTemperatureChangeListener;
  */
 public class WrkPhidget {
 
-		private final static int VINT_SERIALID = 636313;
-	public ItfWrkPhidget refWrk;
+    private final static int VINT_SERIALID = 636313;
+    public ItfWrkPhidget refWrk;
 
-	public WrkPhidget(){
-		try {
-			TemperatureSensor temperatureSensor = new TemperatureSensor();
+    public WrkPhidget() {
+        try {
+            TemperatureSensor temperatureSensor = new TemperatureSensor();
 
-			temperatureSensor.setDeviceSerialNumber(VINT_SERIALID);
-			temperatureSensor.setChannel(1);
+            temperatureSensor.setDeviceSerialNumber(VINT_SERIALID);
+            temperatureSensor.setChannel(0);
 
-			temperatureSensor.addTemperatureChangeListener(new TemperatureSensorTemperatureChangeListener() {
-				@Override
-				public void onTemperatureChange(TemperatureSensorTemperatureChangeEvent temperatureSensorTemperatureChangeEvent) {
-					refWrk.receiveTemperature(temperatureSensorTemperatureChangeEvent.getTemperature());
-				}
-			});
-			temperatureSensor.open();
+            temperatureSensor.addTemperatureChangeListener(new TemperatureSensorTemperatureChangeListener() {
+                @Override
+                public void onTemperatureChange(TemperatureSensorTemperatureChangeEvent temperatureSensorTemperatureChangeEvent) {
+                    try {
+                        Thread.sleep(5000);
+                        refWrk.receiveTemperature(temperatureSensorTemperatureChangeEvent.getTemperature());
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            temperatureSensor.open();
 
-		} catch (PhidgetException e) {
+        } catch (PhidgetException e) {
 
-		}
-	}
+        }
+    }
 
-	public void finalize() throws Throwable {
+    public void finalize() throws Throwable {
 
-	}
+    }
 
 }//end WrkPhidget

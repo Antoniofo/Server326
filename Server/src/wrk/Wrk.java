@@ -97,6 +97,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         refCtrl.logOut();
     }
 
+    @Override
+    public void connectRobot() {
+        wrkRobot.connect("10.18.1.171",7837,306657269);
+    }
+
     public void addUser(Users user) throws MyDBException {
         wrkDb.addUser(user);
     }
@@ -121,7 +126,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void receiveTemperature(double temperature) {
-
+        wrkServer.sendMessage("Temperature"+temperature);
     }
 
     @Override
