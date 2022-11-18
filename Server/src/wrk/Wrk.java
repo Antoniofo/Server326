@@ -54,13 +54,18 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     }
 
     @Override
-    public boolean checkLogin(String value, String s) {
-        boolean isOk = false;
+    public int checkLogin(String value, String s) {
+        int isOk = 0;
         Users u = wrkDb.readUser(value, s);
         if (u != null) {
-            refCtrl.log("Client: " + value + "Connected");
+            if(u.getIsAdmin() == 0){
+                refCtrl.log("Client: " + value + "Connected");
+                isOk = 1;
+            }else{
+                refCtrl.log("Admin: " + value + "Connected");
+                isOk = 2;
+            }
             refCtrl.connectUser(u);
-            isOk = true;
         } else {
             refCtrl.log("Client: " + value + "don't exist");
         }
@@ -85,6 +90,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     @Override
     public void log(String log) {
         refCtrl.log(log);
+    }
+
+    @Override
+    public void logOut() {
+        refCtrl.logOut();
     }
 
     public void addUser(Users user) throws MyDBException {

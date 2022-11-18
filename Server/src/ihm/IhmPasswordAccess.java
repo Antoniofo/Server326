@@ -55,7 +55,10 @@ public class IhmPasswordAccess {
                     stage.setScene(scene);
                     stage.setTitle("Client Admin");
                     stage.show();
-
+                    stage.setOnCloseRequest((e)-> {
+                        e.consume();
+                        System.exit(0);
+                    });
                 } catch (IOException ex) {
                     System.out.println("Can't start the IHM because : " + ex);
                     Platform.exit();

@@ -15,4 +15,6 @@ public interface ItfIhmCtrl {
 	public void startIhm();
 
     void connectUser(Users u);
+
+    void logOut();
 }

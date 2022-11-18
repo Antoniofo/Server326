@@ -12,4 +12,6 @@ public interface ItfCtrlWrk {
     public void log(String log);
 
     void connectUser(Users u);
+
+    void logOut();
 }

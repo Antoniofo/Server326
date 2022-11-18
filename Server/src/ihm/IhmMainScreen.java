@@ -70,6 +70,10 @@ public class IhmMainScreen implements Initializable {
                     stage.setTitle("Main Screen");
                     richTextBoxLogs.setEditable(false);
                     stage.show();
+                    stage.setOnCloseRequest((e)-> {
+                        e.consume();
+                        System.exit(0);
+                    });
                 } catch (IOException ex) {
                     System.out.println("Can't start the IHM because : " + ex);
                     Platform.exit();
@@ -142,7 +146,12 @@ public class IhmMainScreen implements Initializable {
     }
 
     public void updateConnectedUser(Users u) {
-        lstConnectedClients.getItems().clear();
-        lstConnectedClients.getItems().add(u);
+        Platform.runLater(() -> {
+            lstConnectedClients.getItems().clear();
+            if(u != null){
+                lstConnectedClients.getItems().add(u);
+            }
+        });
+
     }
 }//end IhmMainScreen

@@ -113,7 +113,12 @@ public class WrkDB {
     public Users readUser(String username, String pwd) {
         Users user;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '"+username+"' and u.password like '"+pwd+"'");
-        user = (Users) query.getSingleResult();
+        try{
+            user = (Users) query.getSingleResult();
+        } catch (Exception e) {
+            user = null;
+        }
+
         return user;
     }
 }//end WrkDB

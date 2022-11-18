@@ -85,6 +85,11 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
         refIhm.connectUser(u);
     }
 
+    @Override
+    public void logOut() {
+        refIhm.logOut();
+    }
+
     public void start() {
         refIhm.startIhm();
     }

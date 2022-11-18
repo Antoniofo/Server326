@@ -40,20 +40,29 @@ public class WrkClient extends Thread {
             while (runing) {
                 String msg = in.readLine();
                 if(msg != null){
+
+                    System.out.println(msg);
+
                     String[] t = msg.split(",");
                     switch (t[0]){
                         case "checklogin":
-                            boolean isOk = refWrk.checkLogin(t[1],t[2]);
-                            if(isOk){
-                                System.out.println(t[1]+t[2]);
-                                sendMessage("LOGINOK");
-                            }else{
-                                sendMessage("LOGINNOK");
+                            int isOk = refWrk.checkLogin(t[1],t[2]);
+                            switch(isOk){
+                                case 0:
+                                    sendMessage("NOLOGIN");
+                                    break;
+                                case 1:
+                                    sendMessage("LOGINUSER");
+                                    break;
+                                case 2:
+                                    sendMessage("LOGINADMIN");
+                                    break;
                             }
                             break;
                         case "ROBOTINIT":
                             break;
                         case "logout":
+                            refWrk.logOut();
                             break;
                         case "register":
                             boolean oK = refWrk.register(t[1],t[2],t[3]);

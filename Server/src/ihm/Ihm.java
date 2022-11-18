@@ -48,6 +48,11 @@ public class Ihm implements ItfIhmCtrl {
         ihmMain.updateConnectedUser(u);
     }
 
+    @Override
+    public void logOut() {
+        ihmMain.updateConnectedUser(null);
+    }
+
     public void showMainScreen() {
         ihmMain.start();
         ihmPwd.quit();

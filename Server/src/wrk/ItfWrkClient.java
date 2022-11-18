@@ -9,11 +9,13 @@ public interface ItfWrkClient {
 
     public boolean register(String value, String s, String s1);
 
-    public boolean checkLogin(String value, String s);
+    public int checkLogin(String value, String s);
     
     public void doRobotAction(String value);
     
     public void upgradeUser(String value);
 
     void log(String s);
+
+    void logOut();
 }
