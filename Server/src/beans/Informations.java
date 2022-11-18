@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,6 +38,7 @@ public class Informations implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idInformations")
     private Integer idInformations;
@@ -129,7 +132,7 @@ public class Informations implements Serializable {
 
     @Override
     public String toString() {
-        return "Informations[ idInformations=" + idInformations + " ]";
+        return "javaapplication15.Informations[ idInformations=" + idInformations + " ]";
     }
     
 }
