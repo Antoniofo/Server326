@@ -2,6 +2,8 @@ package wrk;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 
@@ -12,31 +14,44 @@ import java.net.Socket;
  */
 public class WrkClient extends Thread {
 
-	private Socket client;
-	private BufferedReader in;
-	private BufferedWriter out;
-	private boolean runing;
-	public ItfWrkClient refWrk;
+    private Socket client;
+    private BufferedReader in;
+    private BufferedWriter out;
+    private boolean runing;
+    public ItfWrkClient refWrk;
 
-	public WrkClient(Socket socket){
-		this.client = socket;
-	}
+    public WrkClient(Socket socket) {
+        this.client = socket;
+    }
 
-	/**
-	 * 
-	 * @exception Throwable Throwable
-	 */
-	public void finalize()
-	  throws Throwable{
+    /**
+     * @throws Throwable Throwable
+     */
+    public void finalize()
+            throws Throwable {
 
-	}
+    }
 
-	@Override
-	public void run(){
+    @Override
+    public void run() {
+        runing = true;
+        try {
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            while (runing) {
+                String msg = in.readLine();
+                if(msg != null){
+                    System.out.println(msg);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-	}
 
-	public void sendMessage(){
+    }
 
-	}
+    public void sendMessage() {
+
+    }
 }//end WrkClient

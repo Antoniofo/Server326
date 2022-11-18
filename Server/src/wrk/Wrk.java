@@ -22,7 +22,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public WrkPhidget wrkPhidget;
 
     public Wrk() {
+        wrkRobot = new WrkRobot();
+        wrkPhidget = new WrkPhidget();
+        wrkServer = new WrkServer();
         wrkDb = new WrkDB();
+        wrkServer.startServer();
     }
 
     /**

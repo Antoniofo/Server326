@@ -16,7 +16,7 @@ public class WrkServer extends Thread {
 
     public WrkClient client;
     private boolean running;
-    private int port = 42071;
+    private int port = 65535;
     private ServerSocket server;
 
     public WrkServer() {
@@ -27,7 +27,7 @@ public class WrkServer extends Thread {
             server = new ServerSocket(port);
             server.setSoTimeout(1000);
         } catch (SocketException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
