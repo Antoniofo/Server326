@@ -7,11 +7,13 @@ package wrk;
  */
 public interface ItfWrkClient {
 
-    public void register(String value);
+    public boolean register(String value, String s, String s1);
 
-    public void checkLogin(String value);
+    public boolean checkLogin(String value, String s);
     
     public void doRobotAction(String value);
     
     public void upgradeUser(String value);
+
+    void log(String s);
 }

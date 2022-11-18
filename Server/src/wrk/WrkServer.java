@@ -1,9 +1,7 @@
 package wrk;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
+import java.net.*;
 import java.util.ArrayList;
 
 
@@ -15,19 +13,18 @@ import java.util.ArrayList;
 public class WrkServer extends Thread {
 
     public WrkClient client;
+    private ItfWrkClient ref;
     private boolean running;
-    private int port = 65535;
-    private ServerSocket server;
+    private int port = 7777;
+    private volatile ServerSocket server;
 
-    public WrkServer() {
-    }
-
-    public void startServer() {
+    public WrkServer(ItfWrkClient ref) {
+        this.ref = ref;
         try {
             server = new ServerSocket(port);
-            server.setSoTimeout(1000);
+            server.setSoTimeout(0);
         } catch (SocketException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -47,10 +44,15 @@ public class WrkServer extends Thread {
             try {
                 synchronized (server) {
                     Socket socketClient = server.accept();
-                    client = new WrkClient(socketClient);
+                    client = new WrkClient(socketClient, ref);
                     client.start();
+                    sleep(10);
                 }
+
+
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }

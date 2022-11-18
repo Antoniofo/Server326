@@ -1,9 +1,6 @@
 package wrk;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 
@@ -20,7 +17,9 @@ public class WrkClient extends Thread {
     private boolean runing;
     public ItfWrkClient refWrk;
 
-    public WrkClient(Socket socket) {
+    public WrkClient(Socket socket, ItfWrkClient refWrk) {
+        super("Thread-TCP");
+        this.refWrk = refWrk;
         this.client = socket;
     }
 
@@ -41,17 +40,52 @@ public class WrkClient extends Thread {
             while (runing) {
                 String msg = in.readLine();
                 if(msg != null){
-                    System.out.println(msg);
+                    String[] t = msg.split(",");
+                    switch (t[0]){
+                        case "checklogin":
+                            boolean isOk = refWrk.checkLogin(t[1],t[2]);
+                            if(isOk){
+                                System.out.println(t[1]+t[2]);
+                                sendMessage("LOGINOK");
+                            }else{
+                                sendMessage("LOGINNOK");
+                            }
+                            break;
+                        case "ROBOTINIT":
+                            break;
+                        case "logout":
+                            break;
+                        case "register":
+                            boolean oK = refWrk.register(t[1],t[2],t[3]);
+                            if(oK){
+                                sendMessage("REGISTEROK");
+                            }else{
+                                sendMessage("REGISTERNOK");
+                            }
+                            break;
+                        case "Connected":
+                            refWrk.log("Client Connected at "+client.getInetAddress().getHostAddress());
+                            break;
+                        case "upgrade":
+                            refWrk.upgradeUser(t[1]);
+                        case "humidity":
+                            break;
+                    }
                 }
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("Err: "+e.getMessage());
         }
 
 
     }
 
-    public void sendMessage() {
+    public void sendMessage(String msg) {
+        try {
+            out.write(msg + System.lineSeparator());
+            out.flush();
+        } catch (IOException ex) {
 
+        }
     }
 }//end WrkClient

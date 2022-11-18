@@ -27,7 +27,6 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
     }
 
     public Ctrl() {
-        refWrk = new Wrk();
 
     }
 
@@ -79,6 +78,11 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
 
     @Override
     public void log(String log) {
+    }
+
+    @Override
+    public void connectUser(Users u) {
+        refIhm.connectUser(u);
     }
 
     public void start() {

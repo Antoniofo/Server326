@@ -67,7 +67,7 @@ public class IhmMainScreen implements Initializable {
                     Scene scene = new Scene(root);
                     stage.setResizable(false);
                     stage.setScene(scene);
-                    stage.setTitle("Client Admin");
+                    stage.setTitle("Main Screen");
                     richTextBoxLogs.setEditable(false);
                     stage.show();
                 } catch (IOException ex) {
@@ -139,5 +139,10 @@ public class IhmMainScreen implements Initializable {
 
     public void log(String text) {
         richTextBoxLogs.appendText(text + System.lineSeparator());
+    }
+
+    public void updateConnectedUser(Users u) {
+        lstConnectedClients.getItems().clear();
+        lstConnectedClients.getItems().add(u);
     }
 }//end IhmMainScreen

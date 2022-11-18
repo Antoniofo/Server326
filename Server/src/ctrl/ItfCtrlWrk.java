@@ -1,6 +1,8 @@
 package ctrl;
 
 
+import beans.Users;
+
 /**
  * @author eggera
  * @version 1.0
@@ -8,4 +10,6 @@ package ctrl;
  */
 public interface ItfCtrlWrk {
     public void log(String log);
+
+    void connectUser(Users u);
 }

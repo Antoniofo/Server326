@@ -1,6 +1,8 @@
 package ihm;
 
 
+import beans.Users;
+
 /**
  * @author raposoesilvac
  * @version 1.0
@@ -12,4 +14,5 @@ public interface ItfIhmCtrl {
 
 	public void startIhm();
 
+    void connectUser(Users u);
 }

@@ -4,7 +4,6 @@ import beans.Users;
 import ctrl.ItfCtrlWrk;
 import app.exceptions.MyDBException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +21,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public WrkPhidget wrkPhidget;
 
     public Wrk() {
+        wrkServer = new WrkServer(this);
         wrkRobot = new WrkRobot();
         wrkPhidget = new WrkPhidget();
-        wrkServer = new WrkServer();
         wrkDb = new WrkDB();
-        wrkServer.startServer();
+        wrkServer.start();
     }
 
     /**
@@ -39,12 +38,33 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
 
     @Override
-    public void register(String value) {
+    public boolean register(String username, String pwd, String s1) {
+        Users u = new Users();
+        short a = (short) ((s1.equals("false")) ? 0 : 1);
+        u.setIsAdmin(a);
+        u.setUsername(username);
+        u.setPassword(pwd);
+        try {
+            wrkDb.addUser(u);
+            return true;
+        } catch (MyDBException e) {
+            return false;
+        }
 
     }
 
     @Override
-    public void checkLogin(String value) {
+    public boolean checkLogin(String value, String s) {
+        boolean isOk = false;
+        Users u = wrkDb.readUser(value, s);
+        if (u != null) {
+            refCtrl.log("Client: " + value + "Connected");
+            refCtrl.connectUser(u);
+            isOk = true;
+        } else {
+            refCtrl.log("Client: " + value + "don't exist");
+        }
+        return isOk;
     }
 
     @Override
@@ -53,6 +73,18 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void upgradeUser(String value) {
+        try {
+            Users u = wrkDb.readUser(value);
+            u.setIsAdmin((short) 1);
+            wrkDb.modifyUser(u);
+        } catch (MyDBException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void log(String log) {
+        refCtrl.log(log);
     }
 
     public void addUser(Users user) throws MyDBException {
@@ -79,6 +111,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void receiveTemperature(double temperature) {
+
     }
 
     @Override

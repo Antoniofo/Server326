@@ -23,7 +23,6 @@ public class Ihm implements ItfIhmCtrl {
         ihmMain = new IhmMainScreen(this);
         ihmPwd = new IhmPasswordAccess(this);
         ihmUser = new IhmUserManagement(this);
-        refCtrl = new Ctrl();
     }
 
     public void setRefCtrl(ItfCtrlIhm refCtrl) {
@@ -42,6 +41,11 @@ public class Ihm implements ItfIhmCtrl {
     @Override
     public void startIhm() {
         ihmPwd.start();
+    }
+
+    @Override
+    public void connectUser(Users u) {
+        ihmMain.updateConnectedUser(u);
     }
 
     public void showMainScreen() {

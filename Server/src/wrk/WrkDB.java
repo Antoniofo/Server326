@@ -75,6 +75,13 @@ public class WrkDB {
         }
     }
 
+    public Users readUser(String username){
+        Users user;
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username="+username);
+        user = (Users) query.getSingleResult();
+        return user;
+    }
+
     public void disconnect() {
         em.close();
         emf.close();
@@ -101,5 +108,12 @@ public class WrkDB {
         return listeUser;
 
 
+    }
+
+    public Users readUser(String username, String pwd) {
+        Users user;
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '"+username+"' and u.password like '"+pwd+"'");
+        user = (Users) query.getSingleResult();
+        return user;
     }
 }//end WrkDB
