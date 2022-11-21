@@ -10,32 +10,35 @@ import ch.emf.info.robot.links.exception.UnreachableRobotException;
  * @version 1.0
  * @created 11-nov.-2022 11:44:15
  */
-public class WrkRobot extends Thread implements ItfWrkRobot {
+public class WrkRobot extends Thread {
 
     private Robot robot;
     private boolean running;
     private int pw;
     private int id;
-    private MyRobot myRobot;
+    private volatile MyRobot myRobot;
     private boolean lastConnected;
     public ItfWrkRobot refWrk;
 
-    public WrkRobot() {
+    public WrkRobot(ItfWrkRobot refWrk) {
         super("Thread Etat Robot");
+        this.refWrk = refWrk;
         robot = new Robot();
-
-
     }
 
     @Override
     public void run() {
+
         running = true;
         while (running) {
-            _sleep(10);
-
-            refWrk.sendImage(robot.getLastImage());
-            refWrk.sendAudio(robot.getLastAudio());
-
+            if (robot != null && robot.isConnected()) {
+                System.out.println(robot.getLastImage());
+                //refWrk.sendImage(robot.getLastImage());
+                //   refWrk.sendAudio(robot.getLastAudio());
+                _sleep(1000);
+            } else {
+                _sleep(1000);
+            }
         }
     }
 
@@ -69,24 +72,16 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
     }
 
     public void connect(String ip, int id, int pw) {
-        myRobot = new MyRobot(ip, id, pw);
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    String ip = myRobot.getIp();
-                    if (ip != null) {
-                        robot.connect(ip, myRobot.getId(), myRobot.getPw());
-                        if (!robot.isConnected()) {
-                            System.out.println("err");
-                        }
-                    }
-                } catch (UnreachableRobotException e) {
-                    e.printStackTrace();
+        try {
+            if (ip != null) {
+                robot.connect(ip, id, pw);
+                if (!robot.isConnected()) {
+                    System.out.println("err");
                 }
-
             }
-        };
+        } catch (UnreachableRobotException e) {
+            System.out.println("Unreadchable");
+        }
     }
 
     public void dock() {
@@ -98,13 +93,13 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
     }
 
     public void moveBackward() {
-        robot.setRightSpeed((short) Short.MAX_VALUE);
-        robot.setRightSpeed((short) Short.MAX_VALUE);
+        robot.setRightSpeed((short) Short.MIN_VALUE);
+        robot.setLeftSpeed((short) Short.MIN_VALUE);
     }
 
     public void moveForward() {
         robot.setRightSpeed((short) Short.MAX_VALUE);
-        robot.setRightSpeed((short) Short.MAX_VALUE);
+        robot.setLeftSpeed((short) Short.MAX_VALUE);
     }
 
     public void neutral() {
@@ -117,25 +112,20 @@ public class WrkRobot extends Thread implements ItfWrkRobot {
     }
 
     public void turnLeft() {
-        robot.setRightSpeed((short) 600);
-        robot.setLeftSpeed((short) 200);
+        robot.setRightSpeed(Short.MAX_VALUE);
+        robot.setLeftSpeed(Short.MIN_VALUE);
     }
 
     public void turnRight() {
-        robot.setRightSpeed((short) 200);
-        robot.setLeftSpeed((short) 600);
+        robot.setLeftSpeed(Short.MAX_VALUE);
+        robot.setRightSpeed(Short.MIN_VALUE);
     }
 
     public void undock() {
         robot.undock();
     }
 
-    @Override
-    public void sendImage(byte[] frame) {
-        robot.getLastImage();
-    }
 
-    @Override
     public void sendAudio(byte[] lastAudio) {
         robot.sendAudio(lastAudio);
     }

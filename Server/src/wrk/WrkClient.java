@@ -52,10 +52,10 @@ public class WrkClient extends Thread {
                                     sendMessage("NOLOGIN");
                                     break;
                                 case 1:
-                                    sendMessage("LOGINUSER");
+                                    sendMessage("LOGINUSER,"+t[1]);
                                     break;
                                 case 2:
-                                    sendMessage("LOGINADMIN");
+                                    sendMessage("LOGINADMIN,"+t[1]);
                                     break;
                             }
                             break;
@@ -80,6 +80,9 @@ public class WrkClient extends Thread {
                             refWrk.upgradeUser(t[1]);
                         case "humidity":
                             break;
+                        case "CTRL":
+                        refWrk.doRobotAction(t);
+                        break;
                     }
                 }
             }
@@ -91,11 +94,14 @@ public class WrkClient extends Thread {
     }
 
     public void sendMessage(String msg) {
-        try {
-            out.write(msg + System.lineSeparator());
-            out.flush();
-        } catch (IOException ex) {
-
+        if(out != null && client.isConnected()){
+            try {
+                System.out.println("sending: "+msg);
+                out.write(msg + System.lineSeparator());
+                out.flush();
+            } catch (IOException ex) {
+            }
         }
+
     }
 }//end WrkClient

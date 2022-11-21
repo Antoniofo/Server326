@@ -3,7 +3,9 @@ package wrk;
 import beans.Users;
 import ctrl.ItfCtrlWrk;
 import app.exceptions.MyDBException;
+import javafx.scene.image.Image;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 /**
@@ -22,10 +24,12 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     public Wrk() {
         wrkServer = new WrkServer(this);
-        wrkRobot = new WrkRobot();
-        wrkPhidget = new WrkPhidget();
-        wrkDb = new WrkDB();
         wrkServer.start();
+        wrkRobot = new WrkRobot(this);
+        wrkPhidget = new WrkPhidget(this);
+        wrkDb = new WrkDB();
+        wrkUDP = new WrkUDP();
+        wrkRobot.start();
     }
 
     /**
@@ -58,30 +62,74 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         int isOk = 0;
         Users u = wrkDb.readUser(value, s);
         if (u != null) {
-            if(u.getIsAdmin() == 0){
-                refCtrl.log("Client: " + value + "Connected");
+            if (u.getIsAdmin() == 0) {
+                refCtrl.log("Client: " + value + " Connected");
                 isOk = 1;
-            }else{
-                refCtrl.log("Admin: " + value + "Connected");
+            } else {
+                refCtrl.log("Admin: " + value + " Connected");
                 isOk = 2;
             }
             refCtrl.connectUser(u);
         } else {
-            refCtrl.log("Client: " + value + "don't exist");
+            refCtrl.log("Client: " + value + " don't exist");
         }
         return isOk;
     }
 
     @Override
-    public void doRobotAction(String value) {
+    public void doRobotAction(String[] value) {
+        switch (value[1]) {
+            case "UNDOCK":
+                wrkRobot.undock();
+                break;
+            case "DOCK":
+                wrkRobot.dock();
+                break;
+            case "LED":
+                wrkRobot.led();
+                break;
+            case "STAND":
+                wrkRobot.standUp();
+                break;
+            case "RTRIG":
+                wrkRobot.moveForward();
+                break;
+            case "LTRIG":
+                wrkRobot.moveBackward();
+                break;
+            case "LJRIGHT":
+                wrkRobot.turnRight();
+                break;
+            case "LJLEFT":
+                wrkRobot.turnLeft();
+                break;
+            case "STOP":
+                wrkRobot.neutral();
+                break;
+            case "STOPHEAD":
+                wrkRobot.headNeutral();
+                break;
+            case "UPHEAD":
+                wrkRobot.headUp();
+                break;
+            case "DOWNHEAD":
+                wrkRobot.headDown();
+                break;
+        }
+
     }
 
     @Override
     public void upgradeUser(String value) {
         try {
             Users u = wrkDb.readUser(value);
-            u.setIsAdmin((short) 1);
-            wrkDb.modifyUser(u);
+            if (u.getIsAdmin() == 0) {
+                u.setIsAdmin((short) 1);
+                wrkDb.modifyUser(u);
+                refCtrl.log("User: " + value + " has been promoted to Admin");
+                refCtrl.updateLists(u);
+                wrkServer.sendMessage("ADMINMODE");
+            }
         } catch (MyDBException e) {
             throw new RuntimeException(e);
         }
@@ -99,8 +147,9 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void connectRobot() {
-        wrkRobot.connect("10.18.1.171",7837,306657269);
+        wrkRobot.connect("10.18.1.252", 7837, 306657269);
     }
+
 
     public void addUser(Users user) throws MyDBException {
         wrkDb.addUser(user);
@@ -126,7 +175,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void receiveTemperature(double temperature) {
-        wrkServer.sendMessage("Temperature"+temperature);
+        wrkServer.sendMessage("Temperature," + temperature);
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface ItfWrkClient {
 
     public int checkLogin(String value, String s);
     
-    public void doRobotAction(String value);
+    public void doRobotAction(String[] value);
     
     public void upgradeUser(String value);
 
@@ -20,4 +20,5 @@ public interface ItfWrkClient {
     void logOut();
 
     void connectRobot();
+
 }

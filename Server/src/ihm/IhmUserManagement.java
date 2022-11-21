@@ -2,8 +2,6 @@ package ihm;
 
 
 import beans.Users;
-import ctrl.Ctrl;
-import ctrl.ItfCtrlIhm;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
@@ -71,7 +69,7 @@ public class IhmUserManagement implements Initializable {
 
                     txtfPwd.setVisible(pw);
                     lblPwd.setVisible(pw);
-                    if(!pw){
+                    if (!pw) {
                         Users u = link.getSelectedUser();
                         txtfUsername.setText(u.getUsername());
                         cbxPrivilege.getSelectionModel().select(u.getIsAdmin());
@@ -95,13 +93,9 @@ public class IhmUserManagement implements Initializable {
         quit();
     }
 
-    /**
-     * @param event
-     */
-
 
     public void quit() {
-        link.updateUsers();
+        link.updateUsers(null);
         stage.close();
 
     }
@@ -116,17 +110,17 @@ public class IhmUserManagement implements Initializable {
             boolean admin = cbxPrivilege.getSelectionModel().getSelectedItem().equals("Admin");
             u.setIsAdmin(admin == true ? (short) 1 : (short) 0);
             link.addUsers(u);
-            link.log("Added a user : "+ u.toString());
+            link.log("Added a user : " + u.toString());
 
-        }else{
-            String ancien =link.getSelectedUser().toString();
+        } else {
+            String ancien = link.getSelectedUser().toString();
             u = link.getSelectedUser();
             System.out.println(u.getIdUsers());
             u.setUsername(txtfUsername.getText());
             boolean admin = cbxPrivilege.getSelectionModel().getSelectedItem().equals("Admin");
             u.setIsAdmin(admin == true ? (short) 1 : (short) 0);
             link.modifyUser(u);
-            link.log(ancien+" changed to : "+u.toString());
+            link.log(ancien + " changed to : " + u.toString());
         }
         quit();
     }

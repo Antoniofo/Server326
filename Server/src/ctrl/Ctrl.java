@@ -78,6 +78,7 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
 
     @Override
     public void log(String log) {
+        refIhm.log(log);
     }
 
     @Override
@@ -88,6 +89,11 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
     @Override
     public void logOut() {
         refIhm.logOut();
+    }
+
+    @Override
+    public void updateLists(Users u) {
+        refIhm.updateUsers(u);
     }
 
     public void start() {

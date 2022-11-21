@@ -7,9 +7,8 @@ package wrk;
  */
 public interface ItfWrkRobot {
 
-    public void sendImage(byte[] frame);
-
-
 
     void sendAudio(byte[] lastAudio);
+
+    void sendImage(byte[] lastImage);
 }

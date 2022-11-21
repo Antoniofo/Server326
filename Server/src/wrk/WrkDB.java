@@ -39,21 +39,6 @@ public class WrkDB {
      */
 
 
-    public void insertInfo(Informations info) throws MyDBException {
-
-        try {
-            et.begin();
-            em.persist(info);
-            et.commit();
-
-
-        }catch(Exception ex){
-                et.rollback();
-            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
-        }
-
-    }
-
     public void addUser(Users u) throws MyDBException{
         try {
             et.begin();
@@ -77,7 +62,7 @@ public class WrkDB {
 
     public Users readUser(String username){
         Users user;
-        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username="+username);
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '"+username+"'");
         user = (Users) query.getSingleResult();
         return user;
     }

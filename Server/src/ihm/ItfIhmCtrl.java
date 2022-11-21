@@ -17,4 +17,8 @@ public interface ItfIhmCtrl {
     void connectUser(Users u);
 
     void logOut();
+
+    void updateUsers(Users u);
+
+    void log(String log);
 }

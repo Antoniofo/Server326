@@ -13,10 +13,11 @@ import com.phidget22.TemperatureSensorTemperatureChangeListener;
  */
 public class WrkPhidget {
 
-    private final static int VINT_SERIALID = 636313;
+    private final static int VINT_SERIALID = 636165;
     public ItfWrkPhidget refWrk;
 
-    public WrkPhidget() {
+    public WrkPhidget(ItfWrkPhidget refWrk) {
+        this.refWrk = refWrk;
         try {
             TemperatureSensor temperatureSensor = new TemperatureSensor();
 
@@ -27,7 +28,7 @@ public class WrkPhidget {
                 @Override
                 public void onTemperatureChange(TemperatureSensorTemperatureChangeEvent temperatureSensorTemperatureChangeEvent) {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                         refWrk.receiveTemperature(temperatureSensorTemperatureChangeEvent.getTemperature());
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);

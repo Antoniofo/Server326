@@ -49,7 +49,7 @@ public class IhmMainScreen implements Initializable {
 
     }
 
-    public void start() {
+    public void init(){
         IhmMainScreen myself = this;
         Callback<Class<?>, Object> controllerFactory = type -> {
             return myself;
@@ -69,7 +69,7 @@ public class IhmMainScreen implements Initializable {
                     stage.setScene(scene);
                     stage.setTitle("Main Screen");
                     richTextBoxLogs.setEditable(false);
-                    stage.show();
+
                     stage.setOnCloseRequest((e)-> {
                         e.consume();
                         System.exit(0);
@@ -80,6 +80,9 @@ public class IhmMainScreen implements Initializable {
                 }
             });
         });
+    }
+    public void start() {
+        stage.show();
     }
 
     public void quit() {
@@ -125,20 +128,27 @@ public class IhmMainScreen implements Initializable {
      */
     @FXML
     private void removeUser(ActionEvent event) {
-        richTextBoxLogs.appendText("User : " + lstUserList.getSelectionModel().getSelectedItem() + " Deleted");
+        log("User : " + lstUserList.getSelectionModel().getSelectedItem() + " Deleted");
         link.deleteUser(lstUserList.getSelectionModel().getSelectedItem());
         lstUserList.getItems().setAll(link.readUsers());
 
 
     }
 
-    public void updateUsers() {
-        lstUserList.getItems().setAll(link.readUsers());
+    public void updateUsers(Users u) {
+        Platform.runLater(()-> {
+            lstUserList.getItems().setAll(link.readUsers());
+            if(u != null){
+                lstConnectedClients.getItems().clear();
+                lstConnectedClients.getItems().add(u);
+            }
+        });
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        updateUsers();
+        updateUsers(null);
     }
 
     public void log(String text) {

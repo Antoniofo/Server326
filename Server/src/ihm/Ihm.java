@@ -1,10 +1,8 @@
 package ihm;
 
 import beans.Users;
-import ctrl.Ctrl;
 import ctrl.ItfCtrlIhm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +38,9 @@ public class Ihm implements ItfIhmCtrl {
 
     @Override
     public void startIhm() {
+        ihmMain.init();
         ihmPwd.start();
+
     }
 
     @Override
@@ -71,8 +71,9 @@ public class Ihm implements ItfIhmCtrl {
     public void showUserManagement(boolean b) {
         ihmUser.start(b);
     }
-    public void updateUsers(){
-        ihmMain.updateUsers();
+    @Override
+    public void updateUsers(Users u){
+        ihmMain.updateUsers(u);
     }
 
 
@@ -94,6 +95,7 @@ public class Ihm implements ItfIhmCtrl {
         return ihmMain.getSelectedUser();
     }
 
+    @Override
     public void log(String text){
         ihmMain.log(text);
     }
