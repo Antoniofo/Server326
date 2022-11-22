@@ -51,7 +51,7 @@ public class Informations implements Serializable {
     private long temperature;
     @Basic(optional = false)
     @Column(name = "humidity")
-    private long humidity;
+    private double humidity;
     @JoinColumn(name = "fk_user", referencedColumnName = "idUsers")
     @ManyToOne(optional = false)
     private Users fkUser;
@@ -94,11 +94,11 @@ public class Informations implements Serializable {
         this.temperature = temperature;
     }
 
-    public long getHumidity() {
+    public double getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(long humidity) {
+    public void setHumidity(Double humidity) {
         this.humidity = humidity;
     }
 

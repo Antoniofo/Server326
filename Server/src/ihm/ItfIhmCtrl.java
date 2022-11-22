@@ -21,4 +21,6 @@ public interface ItfIhmCtrl {
     void updateUsers(Users u);
 
     void log(String log);
+
+    Users getUser();
 }

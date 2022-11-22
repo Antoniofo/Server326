@@ -96,6 +96,11 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
         refIhm.updateUsers(u);
     }
 
+    @Override
+    public Users getUser() {
+       return refIhm.getUser();
+    }
+
     public void start() {
         refIhm.startIhm();
     }

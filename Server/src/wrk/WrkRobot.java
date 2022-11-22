@@ -14,10 +14,6 @@ public class WrkRobot extends Thread {
 
     private Robot robot;
     private boolean running;
-    private int pw;
-    private int id;
-    private volatile MyRobot myRobot;
-    private boolean lastConnected;
     public ItfWrkRobot refWrk;
 
     public WrkRobot(ItfWrkRobot refWrk) {
@@ -35,7 +31,6 @@ public class WrkRobot extends Thread {
                 System.out.println(robot.getLastImage());
                 refWrk.sendImage(robot.getLastImage());
                 //   refWrk.sendAudio(robot.getLastAudio());
-                _sleep(1000);
             } else {
                 _sleep(1000);
             }

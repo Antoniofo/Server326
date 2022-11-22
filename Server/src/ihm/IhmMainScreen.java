@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -18,7 +17,6 @@ import javafx.util.Callback;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import app.helpers.JfxPopup;
 
@@ -163,5 +161,9 @@ public class IhmMainScreen implements Initializable {
             }
         });
 
+    }
+
+    public Users getConnectedUser() {
+        return lstConnectedClients.getItems().get(0);
     }
 }//end IhmMainScreen

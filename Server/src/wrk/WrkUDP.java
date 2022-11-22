@@ -46,7 +46,6 @@ public class WrkUDP {
     }
 
     public void sendVideo(byte[] frame) {
-         System.out.println(frame.length);
         float nombreDecoupe = frame.length / Short.MAX_VALUE;
         for (int i = 0; i < nombreDecoupe; i++) {
             byte[] packet = Arrays.copyOfRange(frame, (int) (i * nombreDecoupe), (int) (i * nombreDecoupe + Short.MAX_VALUE));
@@ -61,7 +60,6 @@ public class WrkUDP {
     }
 
     public void sendSound(byte[] audio) {
-        System.out.println(audio.length);
         try {
             DatagramPacket dp = new DatagramPacket(audio, audio.length, InetAddress.getByName(ip), 42070);
             datagramSocketAud.send(dp);

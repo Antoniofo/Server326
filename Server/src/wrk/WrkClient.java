@@ -79,6 +79,7 @@ public class WrkClient extends Thread {
                         case "upgrade":
                             refWrk.upgradeUser(t[1]);
                         case "humidity":
+                            refWrk.insertInformation(t[1]);
                             break;
                         case "CTRL":
                         refWrk.doRobotAction(t);

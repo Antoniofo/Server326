@@ -21,4 +21,5 @@ public interface ItfWrkClient {
 
     void connectRobot();
 
+    void insertInformation(String s);
 }

@@ -99,4 +99,10 @@ public class Ihm implements ItfIhmCtrl {
     public void log(String text){
         ihmMain.log(text);
     }
+
+    @Override
+    public Users getUser() {
+        ihmMain.getConnectedUser();
+        return null;
+    }
 }//end Ihm

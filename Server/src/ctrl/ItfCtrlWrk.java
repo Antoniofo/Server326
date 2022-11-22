@@ -16,4 +16,6 @@ public interface ItfCtrlWrk {
     void logOut();
 
     void updateLists(Users u);
+
+    Users getUser();
 }

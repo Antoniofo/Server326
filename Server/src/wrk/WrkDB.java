@@ -22,7 +22,6 @@ public class WrkDB {
     private EntityTransaction et;
 
 
-
     public WrkDB() {
         try {
             emf = Persistence.createEntityManagerFactory(pu);
@@ -39,7 +38,7 @@ public class WrkDB {
      */
 
 
-    public void addUser(Users u) throws MyDBException{
+    public void addUser(Users u) throws MyDBException {
         try {
             et.begin();
             em.persist(u);
@@ -49,7 +48,21 @@ public class WrkDB {
             throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
     }
-    public void deleteUser(Users u) throws MyDBException{
+
+    public void addInfo(Informations info) throws MyDBException {
+        try {
+            et.begin();
+            em.persist(info);
+            et.commit();
+
+        } catch (Exception e) {
+            et.rollback();
+            throw new MyDBException(SystemLib.getFullMethodName(), e.getMessage());
+        }
+
+    }
+
+    public void deleteUser(Users u) throws MyDBException {
         try {
             et.begin();
             em.remove(u);
@@ -60,9 +73,9 @@ public class WrkDB {
         }
     }
 
-    public Users readUser(String username){
+    public Users readUser(String username) {
         Users user;
-        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '"+username+"'");
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "'");
         user = (Users) query.getSingleResult();
         return user;
     }
@@ -72,7 +85,7 @@ public class WrkDB {
         emf.close();
     }
 
-    public void modifyUser(Users user) throws MyDBException{
+    public void modifyUser(Users user) throws MyDBException {
         try {
             et.begin();
             em.merge(user);
@@ -86,7 +99,7 @@ public class WrkDB {
     }
 
 
-    public List<Users> readUsers(Class cl) throws MyDBException{
+    public List<Users> readUsers(Class cl) throws MyDBException {
         List<Users> listeUser;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u");
         listeUser = query.getResultList();
@@ -97,8 +110,8 @@ public class WrkDB {
 
     public Users readUser(String username, String pwd) {
         Users user;
-        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '"+username+"' and u.password like '"+pwd+"'");
-        try{
+        Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "' and u.password like '" + pwd + "'");
+        try {
             user = (Users) query.getSingleResult();
         } catch (Exception e) {
             user = null;

@@ -1,11 +1,20 @@
 package wrk;
 
+import beans.Informations;
 import beans.Users;
 import ctrl.ItfCtrlWrk;
 import app.exceptions.MyDBException;
 import javafx.scene.image.Image;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +24,7 @@ import java.util.List;
  */
 public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
+    private double currentTemperature;
     public WrkDB wrkDb;
     public WrkUDP wrkUDP;
     public WrkServer wrkServer;
@@ -115,8 +125,40 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
             case "DOWNHEAD":
                 wrkRobot.headDown();
                 break;
+            case "DPUP":
+                byte[] audio = getAudio();
+                wrkRobot.sendAudio(audio);
         }
 
+    }
+
+    private byte[] getAudio() {
+        byte[] datas = null;
+        try{
+            File f = new File("res/out.wav");
+
+            if (f.exists()) {
+                AudioInputStream is = AudioSystem.getAudioInputStream(f);
+                DataInputStream dis = new DataInputStream(is);
+                try {
+                    AudioFormat format = is.getFormat();
+                    byte[] auddatas = new byte[(int) (is.getFrameLength() * format.getFrameSize())];
+                    dis.readFully(auddatas);
+                    datas = new byte[auddatas.length-44]; //44-> longueur de l'header wav RIFF
+                    System.arraycopy(auddatas, 44, datas, 0, datas.length);
+                } finally {
+                    dis.close();
+                }
+            } else {
+                System.err.println("Le fichier " + f.getAbsolutePath() + " n'existe pas.");
+            }
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return datas;
     }
 
     @Override
@@ -150,6 +192,20 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkRobot.connect("10.18.1.252", 7837, 306657269);
     }
 
+    @Override
+    public void insertInformation(String s) {
+        Informations info = new Informations();
+        info.setHumidity(Double.valueOf(s));
+        info.setTemperature((long) currentTemperature);
+        info.setDate(new Date());
+        info.setFkUser(refCtrl.getUser());
+        try {
+            wrkDb.addInfo(info);
+        } catch (MyDBException e) {
+            System.out.println("ERR "+e.getMessage());
+        }
+    }
+
 
     public void addUser(Users user) throws MyDBException {
         wrkDb.addUser(user);
@@ -175,6 +231,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void receiveTemperature(double temperature) {
+        currentTemperature = temperature;
         wrkServer.sendMessage("Temperature," + temperature);
     }
 
