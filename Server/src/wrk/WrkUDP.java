@@ -2,16 +2,16 @@ package wrk;
 
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.file.Files;
+import java.util.Arrays;
 
 import javafx.scene.image.Image;
+import org.hsqldb.lib.FileAccess;
 import sun.security.x509.IPAddressName;
 
 import javax.imageio.ImageIO;
@@ -46,12 +46,17 @@ public class WrkUDP {
     }
 
     public void sendVideo(byte[] frame) {
-        System.out.println(frame.length);
-        try {
-            DatagramPacket dp = new DatagramPacket(frame, frame.length, InetAddress.getByName(ip), 42069);
-            datagramSocketImg.send(dp);
-        } catch (IOException e) {
-            e.printStackTrace();
+         System.out.println(frame.length);
+        float nombreDecoupe = frame.length / Short.MAX_VALUE;
+        for (int i = 0; i < nombreDecoupe; i++) {
+            byte[] packet = Arrays.copyOfRange(frame, (int) (i * nombreDecoupe), (int) (i * nombreDecoupe + Short.MAX_VALUE));
+            try {
+                DatagramPacket dp = new DatagramPacket(packet, packet.length, InetAddress.getByName(ip), 42069);
+                datagramSocketImg.send(dp);
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

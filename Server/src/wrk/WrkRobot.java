@@ -33,7 +33,7 @@ public class WrkRobot extends Thread {
         while (running) {
             if (robot != null && robot.isConnected()) {
                 System.out.println(robot.getLastImage());
-                //refWrk.sendImage(robot.getLastImage());
+                refWrk.sendImage(robot.getLastImage());
                 //   refWrk.sendAudio(robot.getLastAudio());
                 _sleep(1000);
             } else {
@@ -80,7 +80,7 @@ public class WrkRobot extends Thread {
                 }
             }
         } catch (UnreachableRobotException e) {
-            System.out.println("Unreadchable");
+            System.out.println("Unreadchable "+e.getMessage());
         }
     }
 
