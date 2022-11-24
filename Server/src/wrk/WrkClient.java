@@ -41,7 +41,6 @@ public class WrkClient extends Thread {
                 String msg = in.readLine();
                 if(msg != null){
 
-                    System.out.println(msg);
 
                     String[] t = msg.split(",");
                     switch (t[0]){
@@ -80,7 +79,6 @@ public class WrkClient extends Thread {
                             refWrk.upgradeUser(t[1]);
                             break;
                         case "humidity":
-                            System.out.println(t[1]);
                             refWrk.insertInformation(t[1]);
                             break;
                         case "CTRL":
@@ -99,7 +97,6 @@ public class WrkClient extends Thread {
     public void sendMessage(String msg) {
         if(out != null && client.isConnected()){
             try {
-                System.out.println("sending: "+msg);
                 out.write(msg + System.lineSeparator());
                 out.flush();
             } catch (IOException ex) {

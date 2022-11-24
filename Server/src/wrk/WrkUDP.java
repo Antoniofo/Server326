@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class WrkUDP {
     private DatagramSocket datagramSocketImg;
-    private String ip = "127.0.0.1";
+    private String ip = "192.168.43.30";
 
     public WrkUDP() {
         try {
