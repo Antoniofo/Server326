@@ -24,12 +24,19 @@ public class WrkRobot extends Thread {
 
     public ItfWrkRobot refWrk;
 
+    /**
+     *
+     * @param refWrk
+     */
     public WrkRobot(ItfWrkRobot refWrk) {
         super("Thread Etat Robot");
         this.refWrk = refWrk;
         robot = new Robot();
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
 
@@ -46,6 +53,10 @@ public class WrkRobot extends Thread {
         }
     }
 
+    /**
+     *
+     * @param millis
+     */
     private void _sleep(int millis) {
         try {
             sleep(millis);
@@ -63,18 +74,33 @@ public class WrkRobot extends Thread {
 
     }
 
+    /**
+     *
+     */
     public void headUp() {
         robot.setHeadDirection(RobotState.HeadDirection.UP);
     }
 
+    /**
+     *
+     */
     public void headNeutral() {
         robot.setHeadDirection(RobotState.HeadDirection.NONE);
     }
 
+    /**
+     *
+     */
     public void headDown() {
         robot.setHeadDirection(RobotState.HeadDirection.DOWN);
     }
 
+    /**
+     *
+     * @param ip
+     * @param id
+     * @param pw
+     */
     public void connect(String ip, int id, int pw) {
         try {
             IP = ip;
@@ -91,48 +117,78 @@ public class WrkRobot extends Thread {
         }
     }
 
+    /**
+     *
+     */
     public void dock() {
         robot.dock();
     }
 
+    /**
+     *
+     */
     public void led() {
         robot.setLedEnabled(!robot.getRobotState().isLedEnabled());
     }
 
+    /**
+     *
+     */
     public void moveBackward() {
         robot.setRightSpeed((short) Short.MIN_VALUE);
         robot.setLeftSpeed((short) Short.MIN_VALUE);
     }
 
+    /**
+     *
+     */
     public void moveForward() {
         robot.setRightSpeed((short) Short.MAX_VALUE);
         robot.setLeftSpeed((short) Short.MAX_VALUE);
     }
 
+    /**
+     *
+     */
     public void neutral() {
         robot.setRightSpeed((short) 0);
         robot.setLeftSpeed((short) 0);
     }
 
+    /**
+     *
+     */
     public void standUp() {
         robot.standUp();
     }
 
+    /**
+     *
+     */
     public void turnLeft() {
         robot.setRightSpeed(Short.MAX_VALUE);
         robot.setLeftSpeed(Short.MIN_VALUE);
     }
 
+    /**
+     *
+     */
     public void turnRight() {
         robot.setLeftSpeed(Short.MAX_VALUE);
         robot.setRightSpeed(Short.MIN_VALUE);
     }
 
+    /**
+     *
+     */
     public void undock() {
         robot.undock();
     }
 
-
+    /**
+     *
+     * @param lastAudio
+     */
     public void sendAudio(byte[] lastAudio) {
         robot.sendAudio(lastAudio);
     }
