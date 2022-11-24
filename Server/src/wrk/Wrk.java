@@ -32,9 +32,6 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public ItfCtrlWrk refCtrl;
     public WrkPhidget wrkPhidget;
 
-    /**
-     *
-     */
     public Wrk() {
         wrkServer = new WrkServer(this);
         wrkServer.start();
@@ -45,6 +42,13 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkRobot.start();
     }
 
+    /**
+     * @throws Throwable Throwable
+     */
+    public void finalize()
+            throws Throwable {
+
+    }
 
 
     @Override
@@ -122,16 +126,28 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
                 wrkRobot.headDown();
                 break;
             case "DPUP":
-                byte[] audio = getAudio();
+                byte[] audio = getAudio("res/1.wav");
                 wrkRobot.sendAudio(audio);
+                break;
+            case "DPRIGHT":
+                byte[] audio2 = getAudio("res/2.wav");
+                wrkRobot.sendAudio(audio2);
+                break;
+            case "DPDOWN":
+                byte[] audio3 = getAudio("res/3.wav");
+                wrkRobot.sendAudio(audio3);
+                break;
+            case "DPLEFT":
+                byte[] audio4 = getAudio("res/4.wav");
+                wrkRobot.sendAudio(audio4);
+                break;
         }
-
     }
 
-    private byte[] getAudio() {
+    private byte[] getAudio(String path) {
         byte[] datas = null;
-        try{
-            File f = new File("res/out.wav");
+        try {
+            File f = new File(path);
 
             if (f.exists()) {
                 AudioInputStream is = AudioSystem.getAudioInputStream(f);
@@ -140,7 +156,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
                     AudioFormat format = is.getFormat();
                     byte[] auddatas = new byte[(int) (is.getFrameLength() * format.getFrameSize())];
                     dis.readFully(auddatas);
-                    datas = new byte[auddatas.length-44]; //44-> longueur de l'header wav RIFF
+                    datas = new byte[auddatas.length - 44]; //44-> longueur de l'header wav RIFF
                     System.arraycopy(auddatas, 44, datas, 0, datas.length);
                 } finally {
                     dis.close();
@@ -185,7 +201,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void connectRobot() {
-        wrkRobot.connect("10.18.1.252", 7837, 306657269);
+        wrkRobot.connect("192.168.43.164", 7837, 306657269);
     }
 
     @Override
@@ -198,7 +214,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         try {
             wrkDb.addInfo(info);
         } catch (MyDBException e) {
-            System.out.println("ERR "+e.getMessage());
+            System.out.println("ERR " + e.getMessage());
         }
     }
 
@@ -225,31 +241,28 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         return wrkDb.readUsers(Users.class);
     }
 
-    /**
-     *
-     * @param temperature
-     */
     @Override
     public void receiveTemperature(double temperature) {
         currentTemperature = temperature;
         wrkServer.sendMessage("Temperature," + temperature);
     }
 
-    /**
-     *
-     * @param frame
-     */
     @Override
     public void sendImage(byte[] frame) {
         wrkUDP.sendVideo(frame);
     }
 
-    /**
-     *
-     * @param lastAudio
-     */
-    @Override
-    public void sendAudio(byte[] lastAudio) {
-        wrkUDP.sendSound(lastAudio);
+
+    public void killThread() {
+        try {
+            wrkServer.setRunning(false);
+            wrkRobot.setRunning(false);
+            wrkRobot.join();
+            wrkServer.join();
+            System.gc();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }//end Wrk

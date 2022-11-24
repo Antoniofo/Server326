@@ -21,9 +21,7 @@ public class WrkDB {
     private EntityManager em;
     private EntityTransaction et;
 
-    /**
-     *
-     */
+
     public WrkDB() {
         try {
             emf = Persistence.createEntityManagerFactory(pu);
@@ -35,12 +33,11 @@ public class WrkDB {
         }
     }
 
-
     /**
-     *
-     * @param u
-     * @throws MyDBException
+     * @throws Throwable Throwable
      */
+
+
     public void addUser(Users u) throws MyDBException {
         try {
             et.begin();
@@ -52,11 +49,6 @@ public class WrkDB {
         }
     }
 
-    /**
-     *
-     * @param info
-     * @throws MyDBException
-     */
     public void addInfo(Informations info) throws MyDBException {
         try {
             et.begin();
@@ -70,11 +62,6 @@ public class WrkDB {
 
     }
 
-    /**
-     *
-     * @param u
-     * @throws MyDBException
-     */
     public void deleteUser(Users u) throws MyDBException {
         try {
             et.begin();
@@ -86,11 +73,6 @@ public class WrkDB {
         }
     }
 
-    /**
-     *
-     * @param username
-     * @return
-     */
     public Users readUser(String username) {
         Users user;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "'");
@@ -103,11 +85,6 @@ public class WrkDB {
         emf.close();
     }
 
-    /**
-     *
-     * @param user
-     * @throws MyDBException
-     */
     public void modifyUser(Users user) throws MyDBException {
         try {
             et.begin();
@@ -121,12 +98,7 @@ public class WrkDB {
         }
     }
 
-    /**
-     *
-     * @param cl
-     * @return
-     * @throws MyDBException
-     */
+
     public List<Users> readUsers(Class cl) throws MyDBException {
         List<Users> listeUser;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u");
@@ -136,12 +108,6 @@ public class WrkDB {
 
     }
 
-    /**
-     *
-     * @param username
-     * @param pwd
-     * @return
-     */
     public Users readUser(String username, String pwd) {
         Users user;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "' and u.password like '" + pwd + "'");

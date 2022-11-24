@@ -16,10 +16,6 @@ public class WrkPhidget {
     private final static int VINT_SERIALID = 636165;
     public ItfWrkPhidget refWrk;
 
-    /**
-     *
-     * @param refWrk
-     */
     public WrkPhidget(ItfWrkPhidget refWrk) {
         this.refWrk = refWrk;
         try {
@@ -44,6 +40,10 @@ public class WrkPhidget {
         } catch (PhidgetException e) {
 
         }
+    }
+
+    public void finalize() throws Throwable {
+
     }
 
 }//end WrkPhidget

@@ -40,10 +40,6 @@ public class WrkServer extends Thread {
         }
     }
 
-    /**
-     *
-     * @param msg
-     */
     public void sendMessage(String msg) {
         client.sendMessage(msg);
     }
