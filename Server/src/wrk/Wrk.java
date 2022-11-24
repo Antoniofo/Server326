@@ -32,6 +32,9 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public ItfCtrlWrk refCtrl;
     public WrkPhidget wrkPhidget;
 
+    /**
+     *
+     */
     public Wrk() {
         wrkServer = new WrkServer(this);
         wrkServer.start();
@@ -42,13 +45,6 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkRobot.start();
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
-
-    }
 
 
     @Override
@@ -229,17 +225,29 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         return wrkDb.readUsers(Users.class);
     }
 
+    /**
+     *
+     * @param temperature
+     */
     @Override
     public void receiveTemperature(double temperature) {
         currentTemperature = temperature;
         wrkServer.sendMessage("Temperature," + temperature);
     }
 
+    /**
+     *
+     * @param frame
+     */
     @Override
     public void sendImage(byte[] frame) {
         wrkUDP.sendVideo(frame);
     }
 
+    /**
+     *
+     * @param lastAudio
+     */
     @Override
     public void sendAudio(byte[] lastAudio) {
         wrkUDP.sendSound(lastAudio);

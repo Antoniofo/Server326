@@ -28,6 +28,9 @@ public class WrkUDP {
     private DatagramSocket datagramSocketAud;
     private String ip = "127.0.0.1";
 
+    /**
+     *
+     */
     public WrkUDP() {
         try {
             datagramSocketImg = new DatagramSocket();
@@ -37,14 +40,11 @@ public class WrkUDP {
         }
     }
 
+
     /**
-     * @throws Throwable Throwable
+     *
+     * @param frame
      */
-    public void finalize()
-            throws Throwable {
-
-    }
-
     public void sendVideo(byte[] frame) {
         float nombreDecoupe = frame.length / Short.MAX_VALUE;
         for (int i = 0; i < nombreDecoupe; i++) {
@@ -59,6 +59,10 @@ public class WrkUDP {
         }
     }
 
+    /**It will send audio to the robot.
+     *
+     * @param audio transformed into a byte array.
+     */
     public void sendSound(byte[] audio) {
         try {
             DatagramPacket dp = new DatagramPacket(audio, audio.length, InetAddress.getByName(ip), 42070);
