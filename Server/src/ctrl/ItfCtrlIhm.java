@@ -21,4 +21,5 @@ public interface ItfCtrlIhm {
 
     public List<Users> readUsers();
 
+    void killThread();
 }

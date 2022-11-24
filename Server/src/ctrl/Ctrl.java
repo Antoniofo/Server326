@@ -77,6 +77,11 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
     }
 
     @Override
+    public void killThread() {
+        refWrk.killThread();
+    }
+
+    @Override
     public void log(String log) {
         refIhm.log(log);
     }

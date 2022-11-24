@@ -2,6 +2,7 @@ package wrk;
 
 import java.io.IOException;
 import java.net.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 
@@ -11,10 +12,19 @@ import java.util.ArrayList;
  * @created 11-nov.-2022 11:44:15
  */
 public class WrkServer extends Thread {
+    public void setRunning(boolean running) {
+        this.running = running;
+        if (running == false) {
+            try {
+                server.close();
+            } catch (IOException e) {
+            }
+        }
+    }
 
     public WrkClient client;
     private ItfWrkClient ref;
-    private boolean running;
+    private volatile boolean running;
     private int port = 7777;
     private volatile ServerSocket server;
 
@@ -46,9 +56,7 @@ public class WrkServer extends Thread {
                     sleep(10);
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
             }
         }
     }

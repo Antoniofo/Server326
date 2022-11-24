@@ -11,10 +11,10 @@ import java.net.Socket;
  */
 public class WrkClient extends Thread {
 
-    private Socket client;
-    private BufferedReader in;
-    private BufferedWriter out;
-    private boolean runing;
+    private volatile Socket client;
+    private volatile BufferedReader in;
+    private volatile BufferedWriter out;
+    private volatile boolean runing;
     public ItfWrkClient refWrk;
 
     public WrkClient(Socket socket, ItfWrkClient refWrk) {
@@ -78,7 +78,9 @@ public class WrkClient extends Thread {
                             break;
                         case "upgrade":
                             refWrk.upgradeUser(t[1]);
+                            break;
                         case "humidity":
+                            System.out.println(t[1]);
                             refWrk.insertInformation(t[1]);
                             break;
                         case "CTRL":

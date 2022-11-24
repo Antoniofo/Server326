@@ -56,6 +56,7 @@ public class IhmPasswordAccess {
                     stage.setTitle("Client Admin");
                     stage.show();
                     stage.setOnCloseRequest((e)-> {
+                        link.killThread();
                         e.consume();
                         System.exit(0);
                     });

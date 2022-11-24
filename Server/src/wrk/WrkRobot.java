@@ -12,8 +12,16 @@ import ch.emf.info.robot.links.exception.UnreachableRobotException;
  */
 public class WrkRobot extends Thread {
 
+    private String IP;
+    private int id;
+    private int pw;
     private Robot robot;
-    private boolean running;
+    private volatile boolean running;
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
     public ItfWrkRobot refWrk;
 
     public WrkRobot(ItfWrkRobot refWrk) {
@@ -30,9 +38,10 @@ public class WrkRobot extends Thread {
             if (robot != null && robot.isConnected()) {
                 System.out.println(robot.getLastImage());
                 refWrk.sendImage(robot.getLastImage());
-                //   refWrk.sendAudio(robot.getLastAudio());
             } else {
+
                 _sleep(1000);
+                connect(IP,id,pw);
             }
         }
     }
@@ -68,6 +77,9 @@ public class WrkRobot extends Thread {
 
     public void connect(String ip, int id, int pw) {
         try {
+            IP = ip;
+            this.id = id;
+            this.pw = pw;
             if (ip != null) {
                 robot.connect(ip, id, pw);
                 if (!robot.isConnected()) {

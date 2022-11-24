@@ -1,21 +1,14 @@
 package wrk;
 
 
-import java.awt.image.BufferedImage;
+
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.nio.file.Files;
 import java.util.Arrays;
 
-import javafx.scene.image.Image;
-import org.hsqldb.lib.FileAccess;
-import sun.security.x509.IPAddressName;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 /**
  * @author raposoesilvac
@@ -24,15 +17,12 @@ import javax.imageio.stream.ImageInputStream;
  */
 public class WrkUDP {
     private DatagramSocket datagramSocketImg;
-
-    private DatagramSocket datagramSocketAud;
     private String ip = "127.0.0.1";
 
     public WrkUDP() {
         try {
             datagramSocketImg = new DatagramSocket();
-            datagramSocketAud = new DatagramSocket();
-        } catch (SocketException e) {
+                    } catch (SocketException e) {
             e.printStackTrace();
         }
     }
@@ -59,13 +49,5 @@ public class WrkUDP {
         }
     }
 
-    public void sendSound(byte[] audio) {
-        try {
-            DatagramPacket dp = new DatagramPacket(audio, audio.length, InetAddress.getByName(ip), 42070);
-            datagramSocketAud.send(dp);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
 }//end WrkUDP

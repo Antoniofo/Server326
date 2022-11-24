@@ -102,7 +102,10 @@ public class Ihm implements ItfIhmCtrl {
 
     @Override
     public Users getUser() {
-        ihmMain.getConnectedUser();
-        return null;
+        return ihmMain.getConnectedUser();
+    }
+
+    public void killThread() {
+        refCtrl.killThread();
     }
 }//end Ihm

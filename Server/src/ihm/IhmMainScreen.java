@@ -69,6 +69,7 @@ public class IhmMainScreen implements Initializable {
                     richTextBoxLogs.setEditable(false);
 
                     stage.setOnCloseRequest((e)-> {
+                        link.killThread();
                         e.consume();
                         System.exit(0);
                     });
@@ -164,6 +165,11 @@ public class IhmMainScreen implements Initializable {
     }
 
     public Users getConnectedUser() {
-        return lstConnectedClients.getItems().get(0);
+        if(lstConnectedClients.getItems().isEmpty()){
+            return null;
+        }else{
+            return lstConnectedClients.getItems().get(0);
+        }
+
     }
 }//end IhmMainScreen
