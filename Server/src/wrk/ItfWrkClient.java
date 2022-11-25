@@ -1,5 +1,7 @@
 package wrk;
 
+import java.net.InetAddress;
+
 /**
  * @author eggera
  * @version 1.0
@@ -24,4 +26,6 @@ public interface ItfWrkClient {
     void insertInformation(String s);
 
     void disconnectRobot();
+
+    void changeIP(InetAddress inetAddress);
 }

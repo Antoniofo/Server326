@@ -21,6 +21,7 @@ public class WrkClient extends Thread {
         super("Thread-TCP");
         this.refWrk = refWrk;
         this.client = socket;
+        refWrk.changeIP(client.getInetAddress());
     }
 
 

@@ -36,7 +36,6 @@ public class WrkRobot extends Thread {
         running = true;
         while (running) {
             if (robot != null) {
-                refWrk.sendRobotStatus(robot.isConnected());
                 if (robot.isConnected()) {
                     refWrk.sendImage(robot.getLastImage());
 
@@ -90,7 +89,7 @@ public class WrkRobot extends Thread {
                 }
             }
         } catch (UnreachableRobotException e) {
-            System.out.println("Unreadchable " + e.getMessage());
+            System.out.println("Unreachable " + e.getMessage());
         }
     }
 

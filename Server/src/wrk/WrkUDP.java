@@ -1,7 +1,6 @@
 package wrk;
 
 
-
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,12 +16,12 @@ import java.util.Arrays;
  */
 public class WrkUDP {
     private DatagramSocket datagramSocketImg;
-    private String ip = "127.0.0.1";
+    private volatile InetAddress ip;
 
     public WrkUDP() {
         try {
             datagramSocketImg = new DatagramSocket();
-                    } catch (SocketException e) {
+        } catch (SocketException e) {
             e.printStackTrace();
         }
     }
@@ -40,7 +39,7 @@ public class WrkUDP {
         for (int i = 0; i < nombreDecoupe; i++) {
             byte[] packet = Arrays.copyOfRange(frame, (int) (i * nombreDecoupe), (int) (i * nombreDecoupe + Short.MAX_VALUE));
             try {
-                DatagramPacket dp = new DatagramPacket(packet, packet.length, InetAddress.getByName(ip), 42069);
+                DatagramPacket dp = new DatagramPacket(packet, packet.length, ip, 42069);
                 datagramSocketImg.send(dp);
                 return;
             } catch (IOException e) {
@@ -49,5 +48,7 @@ public class WrkUDP {
         }
     }
 
-
+    public void setIp(InetAddress ip) {
+        this.ip = ip;
+    }
 }//end WrkUDP

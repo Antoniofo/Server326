@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.List;
 
@@ -211,6 +212,12 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         info.setTemperature((long) currentTemperature);
         info.setDate(new Date());
         info.setFkUser(refCtrl.getUser());
+
+        if(((info.getTemperature() > 30 || info.getTemperature() < 0) || info.getHumidity() > 60) && refCtrl.getUser().getIsAdmin() == 0){
+            wrkRobot.disconnect();
+            wrkServer.sendMessage("ALERT");
+        }
+
         try {
             wrkDb.addInfo(info);
         } catch (MyDBException e) {
@@ -221,6 +228,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     @Override
     public void disconnectRobot() {
         wrkRobot.disconnect();
+    }
+
+    @Override
+    public void changeIP(InetAddress inetAddress) {
+        wrkUDP.setIp(inetAddress);
     }
 
 
