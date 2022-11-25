@@ -12,15 +12,7 @@ import java.util.ArrayList;
  * @created 11-nov.-2022 11:44:15
  */
 public class WrkServer extends Thread {
-    public void setRunning(boolean running) {
-        this.running = running;
-        if (running == false) {
-            try {
-                server.close();
-            } catch (IOException e) {
-            }
-        }
-    }
+
 
     public WrkClient client;
     private ItfWrkClient ref;
@@ -28,6 +20,11 @@ public class WrkServer extends Thread {
     private int port = 7777;
     private volatile ServerSocket server;
 
+    /**
+     * Constructor of WrkServer
+     *
+     * @param ref reference of the Wrk
+     */
     public WrkServer(ItfWrkClient ref) {
         this.ref = ref;
         try {
@@ -40,13 +37,37 @@ public class WrkServer extends Thread {
         }
     }
 
+    /**
+     * Set running status of the Thread. Close the socket if the status given is false.
+     *
+     * @param running Thread status
+     */
+    public void setRunning(boolean running) {
+        this.running = running;
+        if (running == false) {
+            try {
+                server.close();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    /**
+     * Send message to client using sub-WrkClient.
+     *
+     * @param msg The message sent
+     */
     public void sendMessage(String msg) {
-        if(client != null){
+        if (client != null) {
             client.sendMessage(msg);
         }
 
     }
 
+    /**
+     * Establishment of the connection with the client and starts to listen the messages.
+     * Also synchronizing the connections with the clients.
+     */
     @Override
     public void run() {
         running = true;
@@ -65,4 +86,4 @@ public class WrkServer extends Thread {
     }
 
 
-}//end WrkServer
+}

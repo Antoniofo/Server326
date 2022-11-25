@@ -30,13 +30,7 @@ public class Ctrl implements ItfCtrlIhm, ItfCtrlWrk {
 
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
 
-    }
 
     @Override
     public void addUser(Users user) {

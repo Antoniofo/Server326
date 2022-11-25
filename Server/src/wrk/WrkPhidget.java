@@ -16,6 +16,10 @@ public class WrkPhidget {
     private final static int VINT_SERIALID = 636165;
     public ItfWrkPhidget refWrk;
 
+    /**
+     * Constructor of WrkPhidget.
+     * @param refWrk reference to Wrk
+     */
     public WrkPhidget(ItfWrkPhidget refWrk) {
         this.refWrk = refWrk;
         try {

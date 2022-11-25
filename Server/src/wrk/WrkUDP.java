@@ -18,6 +18,9 @@ public class WrkUDP {
     private DatagramSocket datagramSocketImg;
     private volatile InetAddress ip;
 
+    /**
+     * Constructor of WrkUdp
+     */
     public WrkUDP() {
         try {
             datagramSocketImg = new DatagramSocket();
@@ -26,7 +29,10 @@ public class WrkUDP {
         }
     }
 
-
+    /**
+     * Send Video to client. The images are cut to fit in the datagram package.
+     * @param frame image sent.
+     */
     public void sendVideo(byte[] frame) {
         float nombreDecoupe = frame.length / Short.MAX_VALUE;
         for (int i = 0; i < nombreDecoupe; i++) {
@@ -41,6 +47,10 @@ public class WrkUDP {
         }
     }
 
+    /**
+     * Sets the IP where the datagram is sent.
+     * @param ip destination IP
+     */
     public void setIp(InetAddress ip) {
         this.ip = ip;
     }

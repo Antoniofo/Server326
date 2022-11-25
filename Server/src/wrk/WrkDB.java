@@ -21,7 +21,9 @@ public class WrkDB {
     private EntityManager em;
     private EntityTransaction et;
 
-
+    /**
+     * Constructor of WrkDB.
+     */
     public WrkDB() {
         try {
             emf = Persistence.createEntityManagerFactory(pu);
@@ -33,7 +35,11 @@ public class WrkDB {
         }
     }
 
-
+    /**
+     * Add a user to the Database.
+     * @param u The User to add.
+     * @throws MyDBException
+     */
     public void addUser(Users u) throws MyDBException {
         try {
             et.begin();
@@ -45,6 +51,11 @@ public class WrkDB {
         }
     }
 
+    /**
+     * Add information to Database.
+     * @param info The information to add
+     * @throws MyDBException
+     */
     public void addInfo(Informations info) throws MyDBException {
         try {
             et.begin();
@@ -58,6 +69,11 @@ public class WrkDB {
 
     }
 
+    /**
+     * Deletes a user from the Database.
+     * @param u The user to delete
+     * @throws MyDBException
+     */
     public void deleteUser(Users u) throws MyDBException {
         try {
             et.begin();
@@ -69,6 +85,11 @@ public class WrkDB {
         }
     }
 
+    /**
+     * Get the user from the Database with his username.
+     * @param username The username of the user.
+     * @return The user from the Database.
+     */
     public Users readUser(String username) {
         Users user;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "'");
@@ -76,11 +97,19 @@ public class WrkDB {
         return user;
     }
 
+    /**
+     * Disconnect from the Database.
+     */
     public void disconnect() {
         em.close();
         emf.close();
     }
 
+    /**
+     * Modifiy a user in the Database.
+     * @param user The user to modify
+     * @throws MyDBException
+     */
     public void modifyUser(Users user) throws MyDBException {
         try {
             et.begin();
@@ -94,7 +123,12 @@ public class WrkDB {
         }
     }
 
-
+    /**
+     * Get all users in the Database.
+     * @param cl The class to get all users
+     * @return All users in the Database.
+     * @throws MyDBException
+     */
     public List<Users> readUsers(Class cl) throws MyDBException {
         List<Users> listeUser;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u");
@@ -104,6 +138,12 @@ public class WrkDB {
 
     }
 
+    /**
+     * Get a user from the Database using username and password
+     * @param username The username of the user
+     * @param pwd The password of the user
+     * @return The user from the Database
+     */
     public Users readUser(String username, String pwd) {
         Users user;
         Query query = em.createQuery("Select u from " + Users.class.getSimpleName() + " u where u.username like '" + username + "' and u.password like '" + pwd + "'");
@@ -115,4 +155,4 @@ public class WrkDB {
 
         return user;
     }
-}//end WrkDB
+}

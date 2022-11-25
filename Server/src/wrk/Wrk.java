@@ -33,6 +33,9 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
     public ItfCtrlWrk refCtrl;
     public WrkPhidget wrkPhidget;
 
+    /**
+     * Constructor of Wrk
+     */
     public Wrk() {
         wrkServer = new WrkServer(this);
         wrkServer.start();
@@ -43,7 +46,13 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkRobot.start();
     }
 
-
+    /**
+     * Create a Users and call sub-WrkDB to add it to the Database.
+     * @param username The username of the user
+     * @param pwd The password of the user
+     * @param s1 The privilege of the user
+     * @return
+     */
     @Override
     public boolean register(String username, String pwd, String s1) {
         Users u = new Users();
@@ -60,6 +69,12 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     }
 
+    /**
+     * Call the sub-WrkDB to verify the user exist, also log the connection and send the user to the CTRL.
+     * @param value Username of the user
+     * @param s password of the user
+     * @return 0 If the user does not exist in the Database, 1 if the user is a simple user and 2 if the user is an admin
+     */
     @Override
     public int checkLogin(String value, String s) {
         int isOk = 0;
@@ -79,6 +94,10 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         return isOk;
     }
 
+    /**
+     * Receive and action the robot can do and call sub-WrkRobot.
+     * @param value the action the robot can do
+     */
     @Override
     public void doRobotAction(String[] value) {
         Users u = refCtrl.getUser();
@@ -158,6 +177,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         }
     }
 
+    /**
+     * Transform a file into byte arrays.
+     * @param path the path where the file is
+     * @return the byte array of the file
+     */
     private byte[] getAudio(String path) {
         byte[] datas = null;
         try {
@@ -187,6 +211,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         return datas;
     }
 
+    /**
+     * Change the privilege of the user by calling the sub-WrkDB and sending a message to the client
+     * by calling sub-WrkServer
+     * @param value
+     */
     @Override
     public void upgradeUser(String value) {
         try {
@@ -203,21 +232,35 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         }
     }
 
+    /**
+     * Send a log message to the Ctrl.
+     * @param log the log message
+     */
     @Override
     public void log(String log) {
         refCtrl.log(log);
     }
 
+    /**
+     * Send the logOut to the Ctrl.
+     */
     @Override
     public void logOut() {
         refCtrl.logOut();
     }
 
+    /**
+     * Connect to the robot using the sub-WrkRobot.
+     */
     @Override
     public void connectRobot() {
         wrkRobot.connect("172.20.10.7", 7837, 306657269);
     }
 
+    /**
+     * Create an information and adds it into the Database using sub-WrkDB.
+     * @param s Humidity value
+     */
     @Override
     public void insertInformation(String s) {
         Informations info = new Informations();
@@ -238,56 +281,91 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         }
     }
 
+    /**
+     * Disconnect the robot using sub-WrkRobot.
+     */
     @Override
     public void disconnectRobot() {
         wrkRobot.disconnect();
     }
 
+    /**
+     * Change the IP of the UDP DatagramSocket using sub-WrkUDP.
+     * @param inetAddress The new IP
+     */
     @Override
     public void changeIP(InetAddress inetAddress) {
         wrkUDP.setIp(inetAddress);
     }
 
-
+    /**
+     * adding a user using sub-WrkDB.
+     * @param user the user to add
+     * @throws MyDBException
+     */
     public void addUser(Users user) throws MyDBException {
         wrkDb.addUser(user);
     }
 
+    /**
+     * Modify a user using sub-WrkDB.
+     * @param user the user to modify
+     * @throws MyDBException
+     */
     public void modifyUser(Users user) throws MyDBException {
         wrkDb.modifyUser(user);
     }
 
+    /**
+     * Delete a user using sub-WrkDB.
+     * @param user the user to delete
+     * @throws MyDBException
+     */
     public void deleteUser(Users user) throws MyDBException {
         wrkDb.deleteUser(user);
 
     }
 
+    /**
+     * Sets the reference to the Ctrl.
+     * @param refCtrl the reference to the Ctrl
+     */
     public void setRefCtrl(ItfCtrlWrk refCtrl) {
         this.refCtrl = refCtrl;
     }
 
+    /**
+     * Reads all user from the Database using sub-WrkDB.
+     * @return A list of User
+     * @throws MyDBException
+     */
     public List<Users> readUsers() throws MyDBException {
 
         return wrkDb.readUsers(Users.class);
     }
 
+    /**
+     * Receiving the temperature from the phidget and sending it to the client using sub-WrkServer.
+     * @param temperature The temperature received
+     */
     @Override
     public void receiveTemperature(double temperature) {
         currentTemperature = temperature;
         wrkServer.sendMessage("Temperature," + temperature);
     }
 
+    /**
+     * Sending the image using sub-WrkUDP.
+     * @param frame the image to send
+     */
     @Override
     public void sendImage(byte[] frame) {
         wrkUDP.sendVideo(frame);
     }
 
-    @Override
-    public void sendRobotStatus(boolean connected) {
-        wrkServer.sendMessage("ROBOTSTATUS," + connected);
-    }
-
-
+    /**
+     * Kills all the thread form sub-WrkServer and sub-WrkRobot, also calling GC.
+     */
     public void killThread() {
         try {
             wrkServer.setRunning(false);
@@ -300,4 +378,4 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
             throw new RuntimeException(e);
         }
     }
-}//end Wrk
+}

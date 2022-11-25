@@ -17,6 +17,11 @@ public class WrkClient extends Thread {
     private volatile boolean runing;
     public ItfWrkClient refWrk;
 
+    /**
+     * Constructor of WrkClient.
+     * @param socket Socket connection of the client
+     * @param refWrk reference to Wrk
+     */
     public WrkClient(Socket socket, ItfWrkClient refWrk) {
         super("Thread-TCP");
         this.refWrk = refWrk;
@@ -25,7 +30,9 @@ public class WrkClient extends Thread {
     }
 
 
-
+    /**
+     * Reads message from the client and interprets it to send order to Wrk.
+     */
     @Override
     public void run() {
         runing = true;
@@ -94,6 +101,10 @@ public class WrkClient extends Thread {
 
     }
 
+    /**
+     * Send message to the client
+     * @param msg the message to send.
+     */
     public void sendMessage(String msg) {
         if(out != null && client.isConnected()){
             try {
