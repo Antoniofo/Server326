@@ -41,7 +41,10 @@ public class WrkServer extends Thread {
     }
 
     public void sendMessage(String msg) {
-        client.sendMessage(msg);
+        if(client != null){
+            client.sendMessage(msg);
+        }
+
     }
 
     @Override
