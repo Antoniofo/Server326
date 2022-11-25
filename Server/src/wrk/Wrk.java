@@ -257,6 +257,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkUDP.sendVideo(frame);
     }
 
+    @Override
+    public void sendRobotStatus(boolean connected) {
+        wrkServer.sendMessage("ROBOTSTATUS,"+connected);
+    }
+
 
     public void killThread() {
         try {

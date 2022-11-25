@@ -35,11 +35,17 @@ public class WrkRobot extends Thread {
 
         running = true;
         while (running) {
-            if (robot != null && robot.isConnected()) {
-                refWrk.sendImage(robot.getLastImage());
-            } else {
-                _sleep(1000);
+            if (robot != null) {
+                refWrk.sendRobotStatus(robot.isConnected());
+                if (robot.isConnected()) {
+                    refWrk.sendImage(robot.getLastImage());
+
+                } else {
+                    _sleep(1000);
+                }
             }
+
+
         }
     }
 
@@ -84,7 +90,7 @@ public class WrkRobot extends Thread {
                 }
             }
         } catch (UnreachableRobotException e) {
-            System.out.println("Unreadchable "+e.getMessage());
+            System.out.println("Unreadchable " + e.getMessage());
         }
     }
 
@@ -135,7 +141,7 @@ public class WrkRobot extends Thread {
     }
 
     public void disconnect() {
-        if(robot.isConnected()){
+        if (robot.isConnected()) {
             robot.disconnect();
         }
     }

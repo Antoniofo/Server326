@@ -8,4 +8,6 @@ package wrk;
 public interface ItfWrkRobot {
 
     void sendImage(byte[] lastImage);
+
+    void sendRobotStatus(boolean connected);
 }
