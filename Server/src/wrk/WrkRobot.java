@@ -57,14 +57,6 @@ public class WrkRobot extends Thread {
         }
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
-
-    }
-
     public void headUp() {
         robot.setHeadDirection(RobotState.HeadDirection.UP);
     }

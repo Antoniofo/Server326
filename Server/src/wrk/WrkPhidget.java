@@ -42,8 +42,4 @@ public class WrkPhidget {
         }
     }
 
-    public void finalize() throws Throwable {
-
-    }
-
 }//end WrkPhidget

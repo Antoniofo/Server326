@@ -43,14 +43,6 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         wrkRobot.start();
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
-
-    }
-
 
     @Override
     public boolean register(String username, String pwd, String s1) {

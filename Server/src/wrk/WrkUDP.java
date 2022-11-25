@@ -26,13 +26,6 @@ public class WrkUDP {
         }
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
-
-    }
 
     public void sendVideo(byte[] frame) {
         float nombreDecoupe = frame.length / Short.MAX_VALUE;

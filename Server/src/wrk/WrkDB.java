@@ -33,10 +33,6 @@ public class WrkDB {
         }
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-
 
     public void addUser(Users u) throws MyDBException {
         try {
