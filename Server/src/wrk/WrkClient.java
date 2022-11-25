@@ -61,6 +61,7 @@ public class WrkClient extends Thread {
                             break;
                         case "logout":
                             refWrk.logOut();
+                            refWrk.disconnectRobot();
                             break;
                         case "register":
                             boolean oK = refWrk.register(t[1],t[2],t[3]);

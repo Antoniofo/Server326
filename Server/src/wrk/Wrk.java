@@ -202,7 +202,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void connectRobot() {
-        wrkRobot.connect("10.18.2.84", 7837, 306657269);
+        wrkRobot.connect("172.20.10.7", 7837, 306657269);
     }
 
     @Override
