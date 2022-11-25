@@ -23,13 +23,7 @@ public class WrkClient extends Thread {
         this.client = socket;
     }
 
-    /**
-     * @throws Throwable Throwable
-     */
-    public void finalize()
-            throws Throwable {
 
-    }
 
     @Override
     public void run() {
