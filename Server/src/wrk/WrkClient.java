@@ -61,6 +61,9 @@ public class WrkClient extends Thread {
                         case "ROBOTINIT":
                             refWrk.connectRobot();
                             break;
+                        case "ROBOTSHUT":
+                            refWrk.disconnectRobot();
+                            break;
                         case "logout":
                             refWrk.logOut();
                             break;

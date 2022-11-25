@@ -201,7 +201,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void connectRobot() {
-        wrkRobot.connect("192.168.43.164", 7837, 306657269);
+        wrkRobot.connect("10.18.2.84", 7837, 306657269);
     }
 
     @Override
@@ -216,6 +216,11 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         } catch (MyDBException e) {
             System.out.println("ERR " + e.getMessage());
         }
+    }
+
+    @Override
+    public void disconnectRobot() {
+        wrkRobot.disconnect();
     }
 
 

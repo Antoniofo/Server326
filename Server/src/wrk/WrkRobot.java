@@ -36,12 +36,9 @@ public class WrkRobot extends Thread {
         running = true;
         while (running) {
             if (robot != null && robot.isConnected()) {
-                System.out.println(robot.getLastImage());
                 refWrk.sendImage(robot.getLastImage());
             } else {
-
                 _sleep(1000);
-                connect(IP,id,pw);
             }
         }
     }
@@ -135,5 +132,11 @@ public class WrkRobot extends Thread {
 
     public void sendAudio(byte[] lastAudio) {
         robot.sendAudio(lastAudio);
+    }
+
+    public void disconnect() {
+        if(robot.isConnected()){
+            robot.disconnect();
+        }
     }
 }//end WrkRobot
