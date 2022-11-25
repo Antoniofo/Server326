@@ -88,6 +88,7 @@ public class WrkClient extends Thread {
             }
         } catch (IOException e) {
             System.out.println("Err: "+e.getMessage());
+            refWrk.disconnectRobot();
         }
 
 

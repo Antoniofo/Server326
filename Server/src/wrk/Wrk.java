@@ -81,6 +81,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void doRobotAction(String[] value) {
+        Users u = refCtrl.getUser();
         switch (value[1]) {
             case "UNDOCK":
                 wrkRobot.undock();
@@ -119,20 +120,40 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
                 wrkRobot.headDown();
                 break;
             case "DPUP":
-                byte[] audio = getAudio("res/1.wav");
-                wrkRobot.sendAudio(audio);
+
+                if (u != null) {
+                    if (u.getIsAdmin() == 1) {
+                        byte[] audio = getAudio("res/1.wav");
+                        wrkRobot.sendAudio(audio);
+                    }
+                }
                 break;
             case "DPRIGHT":
-                byte[] audio2 = getAudio("res/2.wav");
-                wrkRobot.sendAudio(audio2);
+
+                if (u != null) {
+                    if (u.getIsAdmin() == 1) {
+                        byte[] audio = getAudio("res/2.wav");
+                        wrkRobot.sendAudio(audio);
+                    }
+                }
                 break;
             case "DPDOWN":
-                byte[] audio3 = getAudio("res/3.wav");
-                wrkRobot.sendAudio(audio3);
+
+                if (u != null) {
+                    if (u.getIsAdmin() == 1) {
+                        byte[] audio = getAudio("res/3.wav");
+                        wrkRobot.sendAudio(audio);
+                    }
+                }
                 break;
             case "DPLEFT":
-                byte[] audio4 = getAudio("res/4.wav");
-                wrkRobot.sendAudio(audio4);
+                
+                if (u != null) {
+                    if (u.getIsAdmin() == 1) {
+                        byte[] audio = getAudio("res/4.wav");
+                        wrkRobot.sendAudio(audio);
+                    }
+                }
                 break;
         }
     }
@@ -205,7 +226,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
         info.setDate(new Date());
         info.setFkUser(refCtrl.getUser());
 
-        if(((info.getTemperature() > 30 || info.getTemperature() < 0) || info.getHumidity() > 60) && refCtrl.getUser().getIsAdmin() == 0){
+        if (((info.getTemperature() > 30 || info.getTemperature() < 0) || info.getHumidity() > 60) && refCtrl.getUser().getIsAdmin() == 0) {
             wrkRobot.disconnect();
             wrkServer.sendMessage("ALERT");
         }
@@ -263,7 +284,7 @@ public class Wrk implements ItfWrkRobot, ItfWrkClient, ItfWrkPhidget {
 
     @Override
     public void sendRobotStatus(boolean connected) {
-        wrkServer.sendMessage("ROBOTSTATUS,"+connected);
+        wrkServer.sendMessage("ROBOTSTATUS," + connected);
     }
 
 
